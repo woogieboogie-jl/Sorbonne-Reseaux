@@ -1,10 +1,8 @@
 def fileinput(path = "testinput.txt"):
-    file = open(path, 'r').read()
-    return file.lower()
+    file = open(path, 'r').read().replace("\n", " ")
+    return file.lower().split(" ")
 
 
 def fileoutput(output, path = "testoutput.txt"):
-    file = open(path, 'w')
-    file.write(output)
-    file.close()
-    
+    with open(path,'w') as file:
+        file.write(output)
