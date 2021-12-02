@@ -1,6 +1,7 @@
 from iohandler import fileinput, fileoutput
 from hexdecoder import ParsedtoDeclist, parser, listToStringDec
 
+print("hello")
 
 file = fileinput()
 parsed = parser(file)
