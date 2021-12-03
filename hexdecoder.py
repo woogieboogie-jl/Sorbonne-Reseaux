@@ -1,12 +1,9 @@
-
-
 # check if given String / Hex data is hexadecimal or not, else return False
 def isHex(hex_string):
-    hex_list = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
     try:
         test_byte = [int(halfbyte, 16) for halfbyte in hex_string] 
         for halfbyte in test_byte:
-            if halfbyte not in hex_list:
+            if halfbyte not in range(0,16):
                 return False
         return True
     except ValueError:
@@ -19,43 +16,50 @@ def isOffset(hex_String):
     else:
         return False 
 
-def parserTrace(hex_dump):
+# checks each line from hex_list if each line starts with an offset, if not it discards.
+def filterData(hex_list):
+    filtered_list = []
+    for line in hex_list:
+        if isOffset(line.split(" ")[0]):
+            filtered_list.append(line)
+    return filtered_list
+    
+# splits traces to multiple nested lists from a single hex_list
+def splitTrace(hex_list):
     trace_list = []
-    cnt = 0
     trace = []
     found_offset = False
-    for element in hex_dump:
-        if found_offset and isOffset(element) and int(element,16) ==0:
+        
+    for line in hex_list:
+        offset_line = line.split(" ")[0]
+        if found_offset and int(offset_line,16) ==0:
             trace_list.append(trace)
             trace = []
-            cnt += 1
-        if isOffset(element) and int(element,16) == 0:
+        if int(offset_line,16) == 0:
             found_offset = True
-        if found_offset and isHex(element):
-            trace.append(element)
+        if found_offset:
+            trace.append(line)
     trace_list.append(trace) 
-
     return trace_list
 
-
-# def parser_inner(trace_list):
-    # line_list = [line.split(" ") for line in read_list]
-    # hex_dict = {}
-    # pre_offset = ""
-    # for line in line_list:
-
-    #     if isOffset(element):
-    #         if int(element, 16) == 0:
-    #             pre_offset = element
-    #         else:
-                
-        
-        
-
-    #         hex_dict[f"{pre_offset}"]
-
-        
-    # return parsed
+# compares offsets and ignores lines with unmatching offsets + integrates lines into a single list
+def offsetSeq(trace_list):
+    trace_list_hex = [] 
+    for trace in trace_list:
+        list_hex = []
+        for line in trace:
+            line_hex = list(filter(lambda x: x!="" ,line.split(" ")))
+            if len(list_hex) == 0:
+                for s in line_hex[1:]:
+                    if isHex(s):
+                        list_hex.append(s)
+            else:
+                if len(list_hex) == int(line_hex[0],16):
+                    for s in line_hex[1:]:
+                        if isHex(s):
+                            list_hex.append(s)
+        trace_list_hex.append(list_hex)
+    return trace_list_hex
 
 
 # returns list of decimal numbers from list of hexadecimal Strings

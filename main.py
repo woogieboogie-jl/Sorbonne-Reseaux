@@ -9,8 +9,7 @@ def initiate():
         try:
             if path_input:
                 os.chdir(path_input)
-
-            text_list = list(filter(lambda x: ".txt" in x, os.listdir()))    
+            text_list = list(filter(lambda x: ".txt" in x, os.listdir()))
             print("----------AVALIABLE TEXT FILES-----------")
             for file in text_list:
                 print(file)
@@ -32,8 +31,22 @@ def initiate():
             continue
 
         
-        
 
-hex_dump = initiate()
-print(hex_dump)
+def parser(hex_list):
+    hex_list_filtered = hexdecoder.filterData(hex_list)
+    hex_list_seperated = hexdecoder.splitTrace(hex_list_filtered)
+    hex_list_parsed = hexdecoder.offsetSeq(hex_list_seperated)
+    return hex_list_parsed
 
+
+
+
+
+def main():
+    hex_list = initiate()
+    hex_parsed = parser(hex_list)
+    print(hex_parsed)
+
+
+if __name__ == "__main__":
+    main()
