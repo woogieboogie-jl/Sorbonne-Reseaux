@@ -12,7 +12,11 @@ Created on Fri Dec  3 18:53:12 2021
 
 octects = ['0F','04','78','56','07','03','20','44','56','78','56','38','92','00','92','20','60','56','78','56','00','03','00','56','04','56','38','92','08','08','D4']
 
+#UDP returns DNS true if destination port is 53
+
+
 def UDP(octects):
+    DNS = False
     print("The UDP message:")
     #Source Port
     SP = int(octects[0] + octects[1],16)
@@ -35,5 +39,13 @@ def UDP(octects):
     D = int(D, 16)
     print("\tData:",hex(D))
     
+    if DP == 53:
+        DNS= True
+      
+    #results to return: dictionary with trimmed list and DNS
+    Trimmed_octects = octects[8:]
+    ResultUDP = {1:Trimmed_octects,2:DNS}
+        
+    return ResultUDP
     
-UDP(octects)
+    

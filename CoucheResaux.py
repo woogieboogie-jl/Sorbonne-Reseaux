@@ -117,14 +117,13 @@ def IP(octects):
     
     #Dictionary with response
     trimmed_octects = octects[IHL*4:]     #Octetcs without the IP header
-    Result = {1:trimmed_octects,2:UDP}
+    ResultIP = {1:trimmed_octects,2:UDP}
 
-    return Result
+    return ResultIP
     
         
     
-IP(octects)
-    
+
 
 
 
