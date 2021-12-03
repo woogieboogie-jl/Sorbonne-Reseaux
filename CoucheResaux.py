@@ -9,8 +9,29 @@ Created on Sun Nov 28 16:25:55 2021
 #project Résaux: couche Réseaux
 
 
-octects = ['F0','56','78','56','38','92','20','60','56','78','56','38','92','00','92','20','60','56','78','56','38','92','00','56','78','56','38','92','00']
+octects = ['0F','04','78','56','07','03','20','44','56','78','56','38','92','00','92','20','60','56','78','56','00','03','00','56','04','56','38','92','08','08','D4']
 
+def IPOptions(octects):
+    Opts = { 0: "End of Options List (EOOL)", 1: "No Operation (NOP)", 7: "Record Route (RR)", 68: "Time Stamp (TS)", 131: "Loose Source Route (LSR)", 137: "Strict Source Route (SSR)"}
+    while len(octects) > 0 :
+        o = int(octects[0],16)
+        Opt = Opts.get(o, "Option unconnu")
+        print(f"\t{o}: {Opt}.")
+        if o == 0:  #im not quite suere about how the EOOL works or padding either, need to consult this
+            break
+        else:
+            L = octects[1]
+            L_dec = int(L,16)
+            print("\t\tLa longueur de l'option est de", L_dec, "octects.")
+            V = octects[2:L_dec]
+            V = ''.join(V)
+            V = hex(int(V,16))
+            print("\t\tLa valeur de l'option est", V)
+            octects = octects[L_dec:]
+            
+
+#Function IP is gonna return a directory with first the new octect list
+#we use in the next levels and second the UDP true or false
 
 def IP(octects):
     #version
@@ -30,8 +51,8 @@ def IP(octects):
     print("Longueur totale:", TL, "octects.")
     
     #Identification
-    ID = int(octects[4]+ octects[5], 16)
-    print("Identification:", ID)
+    ID = "{0:04x}".format(int(octects[4]+ octects[5], 16))
+    print(f"Identification: 0x{ID}")
     
     #Flags
     F = str(octects[6])[:1]
@@ -66,9 +87,9 @@ def IP(octects):
     else: 
         print("Protocole unconu.")
         
-    #Header checksum #change to hexa
-    HC = int(octects[10] + octects[11], 16)         #HC en decimal
-    HC = bin(HC)
+    #Header checksum 
+    HC = int(octects[10] + octects[11], 16)         
+    HC = hex(HC)
     print("Checksum:", HC)
     #possible:verifier si le checksum est correct
     
@@ -84,26 +105,21 @@ def IP(octects):
     DA2 = int(octects[17],16)
     DA3 = int(octects[18],16)
     DA4 = int(octects[19],16)
-    print(f"Destination Adress: {SA1}.{SA2}.{SA3}.{SA4}")
+    print(f"Destination Adress: {DA1}.{DA2}.{DA3}.{DA4}")
     
-    #Options
+    #Options+padding
+    print("Options:")
     if IHL == 5:
-        print("Il n'y a pas d'options.")
-
-    Options = {0: 'End of Options List (EOOL)', 1: 'No Operation (NOP)', 7: 'Record Route (RR)',
-               68: 'Time Stamp (TS)', 131: 'Loose Source Route (LSR)', 137: 'Strict Source Route (SSR)'}
-    O = int(octects[20],16)
-    if "O" in Options:
-        O = Options[O]
-        print("Option")
+        print("\tIl n'y a pas d'options.")
         
+    Options_octects = octects[20:IHL*4]
+    IPOptions(Options_octects)
     
+    #Octetcs without the IP header
+    return UDP, octects[IHL*4:]
     
         
     
-    
-
-
 IP(octects)
     
 
