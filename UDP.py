@@ -31,7 +31,7 @@ def UDP(octects):
     print(f"\tLength: {L} octects.")
     
     #Checksum
-    C = "{0:04x}".format(int(octects[6]+octects[7],16))
+    C = hex(int(octects[6]+octects[7],16))
     print("\tChecksum:", C)
     
     #Data
@@ -48,4 +48,4 @@ def UDP(octects):
         
     return ResultUDP
     
-    
+UDP(octects)
