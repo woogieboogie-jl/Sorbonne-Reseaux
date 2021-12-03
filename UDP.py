@@ -15,4 +15,18 @@ octects = ['0F','04','78','56','07','03','20','44','56','78','56','38','92','00'
 def UDP(octects):
     
     #Source Port
+    SP = int(octects[0] + octects[1],16)
+    print("Source Port:",SP)
+    
+    #Destination Port
+    DP = int(octects[2]+octects[3],16)
+    print("Destination Port:",DP)
+    
+    #Length
+    L = int(octects[4]+octects[5],16)
+    print(f"Length: {L} octects.")
+    
+    #Checksum
+    
+    
     
