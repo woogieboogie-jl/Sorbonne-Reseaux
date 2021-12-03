@@ -115,8 +115,11 @@ def IP(octects):
     Options_octects = octects[20:IHL*4]
     IPOptions(Options_octects)
     
-    #Octetcs without the IP header
-    return UDP, octects[IHL*4:]
+    #Dictionary with response
+    trimmed_octects = octects[IHL*4:]     #Octetcs without the IP header
+    Result = {1:trimmed_octects,2:UDP}
+
+    return Result
     
         
     

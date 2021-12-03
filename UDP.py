@@ -13,20 +13,27 @@ Created on Fri Dec  3 18:53:12 2021
 octects = ['0F','04','78','56','07','03','20','44','56','78','56','38','92','00','92','20','60','56','78','56','00','03','00','56','04','56','38','92','08','08','D4']
 
 def UDP(octects):
-    
+    print("The UDP message:")
     #Source Port
     SP = int(octects[0] + octects[1],16)
-    print("Source Port:",SP)
+    print("\tSource Port:",SP)
     
     #Destination Port
     DP = int(octects[2]+octects[3],16)
-    print("Destination Port:",DP)
+    print("\tDestination Port:",DP)
     
     #Length
     L = int(octects[4]+octects[5],16)
-    print(f"Length: {L} octects.")
+    print(f"\tLength: {L} octects.")
     
     #Checksum
+    C = "{0:04x}".format(int(octects[6]+octects[7],16))
+    print("\tChecksum:", C)
+    
+    #Data
+    D = ''.join(octects[8:])
+    D = int(D, 16)
+    print("\tData:",hex(D))
     
     
-    
+UDP(octects)
