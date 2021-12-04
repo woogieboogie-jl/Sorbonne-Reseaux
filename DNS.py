@@ -15,7 +15,6 @@ octects = ['0F','04','78','56','07','03','20','44','56','78','56','38','92','00'
 def DNS(octects):
     #Identification
     I = hex(int(octects[0]+octects[1],16))
-    print("Identification:", I)
     
     #Control
     C = octects[2]+octects[3]
@@ -39,3 +38,61 @@ def DNS(octects):
     #Answers
     
 DNS(octects)
+
+
+def DHCP(octects):
+    
+    op = int(octects[0],16)
+    if op == 1:
+        op = 'DHCP Request Client'
+    elif op == 2:
+        op = 'DHCP Reply Serveur'
+    else:
+        op = 'Unknown type of message'
+    
+    htype = octects[1]
+    
+    hlen = octects[2]
+    
+    hops = octects[3]
+    
+    xid = octects[4]+octects[5]+octects[6]+octects[7]
+    
+    secs = octects[8]+octects[9]
+    
+    flags = octects[10]+octects[11]
+    
+    ciadrr = octects[12:15]
+             
+    yiadrr = octects[16:19]
+    
+    siadrr = octects[20:23]
+    
+    giaddr = octects[24:27]
+    
+    chaddr = octects[28:44]
+    
+    #je ne suis pas sure avec ce que je dois faire avec les champs de sname et file parceque qu'ils sont optionnels
+    
+    Options = octects[45:]
+    
+    Opt53 = {1: "DHCP Discover", 2:"DHCP Offer", 3:"DHCP Request", 4:"DHCP Decline", 5:"DHCP Pack", 6:"DHCP Nak", 7:"DHCP Release", 8:"DHCP Inform"}
+    
+    #on doit toujours finir la zone d’options par une option 255
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+

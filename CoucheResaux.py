@@ -12,18 +12,17 @@ Created on Sun Nov 28 16:25:55 2021
 
 from hexdecoder import isHex
 
-
-octets = ['F0','56','78','56','38','92','20','60','56','78','56','38','92','00','92','20','60','56','78','56','38','92','00','56','78','56','38','92','00']
     
-octets_1 = ['0F','04','78','56','07','03','20','44','56','78','56','38','92','00','92','20','60','56','78','56','00','03','00','56','04','56','38','92','08','08','D4']
+octets = ['46','00','00','44','AD','0B','00','00','40','11','72','72','AC','14','00','06','60','56','78','56','00','03','00','56','04','56','38','92','08','08','D4']
 
 
 def getVersion(octets):
-    return f"Version: {int(str(octets[0])[0],16)}"
+    return f"Version: IPV{int(str(octets[0])[0],16)}"
 
 
 def getIHL(octets):
-    return f"IP Header Length: {int(str(octets[0])[1],16)}"
+    IHL = int(str(octets[0])[1],16)
+    return f"IP Header Length: {IHL}", IHL 
 
 
 def getTOS(octets):
@@ -40,14 +39,11 @@ def getID(octets):
 
 def getFlags(octets):
     F = "{0:04b}".format(int(octets[6][0], 16))
-    R = F[0], DF = F[1], MF = F[2]
+    R = F[0]
+    DF = F[1]
+    MF = F[2]
 
-    s = f"""
-    The flags have the following values:
-    \tThe first bit is reserved with a value of {R}
-    \tDon't Fragment: {True if int(DF) else False}
-    \tMore Fragment: {True if int(MF) else False}
-    """
+    s = f"Flags:\n\tThe first bit is reserved with a value of: {R}\n\tDon't Fragment: {True if int(DF) else False}\n\tMore Fragment: {True if int(MF) else False}"
 
     return s
 
@@ -100,7 +96,7 @@ def getOpts(octets):
         opts_out.append("** POSSIBLE DATA CORRUPTION: Options impossible to locate while IHL indicates its existence!")
     else:
         while len(opt_list) > 0:
-            o = int(opt_list, 16)
+            o = int(opt_list[0], 16)
             opt = opt_dict.get(o, "Unknown Option")
             opts_out.append(f"\t{o}: {opt}")
             if o == 0:
@@ -113,45 +109,22 @@ def getOpts(octets):
                 opts_out.append(f"\t\tThe value of option is: {opt_val_dec} ({opt_val_hex})")
                 opt_list = opt_list[opt_len:]
     return "\n".join(opts_out)
-                
 
-
-
-def IPOptions(octects):
-    Opts = { 0: "End of Options List (EOOL)", 1: "No Operation (NOP)", 7: "Record Route (RR)", 68: "Time Stamp (TS)", 131: "Loose Source Route (LSR)", 137: "Strict Source Route (SSR)"}
-    while len(octects) > 0 :
-        o = int(octects[0],16)
-        Opt = Opts.get(o, "Option unconnu")
-        print(f"\t{o}: {Opt}.")
-        if o == 0:  #im not quite suere about how the EOL works or padding either, need to consult this
-            break
-        else:
-            L = octects[1]
-            L_dec = int(L,16)
-            print("\t\tLa longueur de l'option est de", L_dec, "octects.")
-            V = octects[2:L_dec]
-            V = ''.join(V)
-            V = hex(int(V,16))
-            print("\t\tLa valeur de l'option est", V)
-            octects = octects[L_dec:]
-
-    while len(octets) > 0:
-        o = int()
-            
-
-#Function IP is gonna return a directory with first the new octect list
-#we use in the next levels and second the UDP true or false
     
+    # returns string of data regarding Network Layer + boolean that checks if UDP value is true or not
 def parserNetwork(octets):
+    proto_s, is_UDP = getProto(octets)
+    IHL_s, IHL = getIHL(octets)
+
     elements = [
         getVersion(octets), 
-        getIHL(octets), 
+        IHL_s,
         getTOS(octets), 
         getTL(octets), 
         getID(octets), 
         getFlags(octets), 
         getFO(octets), 
-        getProto(octets), 
+        proto_s,
         getHCS(octets),
         getSourceAddr(octets),
         getDestinAddr(octets)
@@ -163,12 +136,16 @@ def parserNetwork(octets):
         elements.append(getOpts(octets))
     else:
         elements.append("** POSSIBLE DATA CORRUPTION: IHL value given less than 5!")
-    return "\n".join(elements)
+    parsed_dict = {"segment": octets[IHL*4:], "UDP": is_UDP, "analysis": "\n".join(elements)}
+    return parsed_dict
 
 
 
 if __name__ == "__main__":
-    parserNetwork(octets)
+    network = parserNetwork(octets)
+    print(network["analysis"])
+    print(network["UDP"])
+    print(network["segment"])
     
 
 
