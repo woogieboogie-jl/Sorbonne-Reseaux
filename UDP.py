@@ -17,6 +17,7 @@ octects = ['0F','04','78','56','07','03','20','44','56','78','56','38','92','00'
 
 def UDP(octects):
     DNS = False
+    DHCP = False
     print("The UDP message:")
     #Source Port
     SP = int(octects[0] + octects[1],16)
@@ -41,10 +42,13 @@ def UDP(octects):
     
     if DP == 53:
         DNS= True
+    if DP == 67 or DP==68:
+        DHCP = True
+        
       
-    #results to return: dictionary with trimmed list and DNS
+    #results to return: dictionary with trimmed list, DNS, DHCP and the destination port
     Trimmed_octects = octects[8:]
-    ResultUDP = {1:Trimmed_octects,2:DNS}
+    ResultUDP = {1:Trimmed_octects,2:DNS, 3:DHCP, 4:DP}
         
     return ResultUDP
     
