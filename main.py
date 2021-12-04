@@ -40,8 +40,6 @@ def parser(hex_list):
 
 
 
-
-
 def main():
     hex_list = initiate()
     hex_parsed = parser(hex_list)
