@@ -44,9 +44,9 @@ def DHCP(octects):
     
     op = int(octects[0],16)
     if op == 1:
-        op = 'DHCP Request Message'
+        op = 'DHCP Request Client'
     elif op == 2:
-        op = 'DHCP Reply Message'
+        op = 'DHCP Reply Serveur'
     else:
         op = 'Unknown type of message'
     
@@ -72,8 +72,13 @@ def DHCP(octects):
     
     chaddr = octects[28:44]
     
+    #je ne suis pas sure avec ce que je dois faire avec les champs de sname et file parceque qu'ils sont optionnels
     
+    Options = octects[45:]
     
+    Opt53 = {1: "DHCP Discover", 2:"DHCP Offer", 3:"DHCP Request", 4:"DHCP Decline", 5:"DHCP Pack", 6:"DHCP Nak", 7:"DHCP Release", 8:"DHCP Inform"}
+    
+    #on doit toujours finir la zone d’options par une option 255
     
     
     

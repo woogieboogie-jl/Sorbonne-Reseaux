@@ -11,23 +11,23 @@ Created on Sun Nov 28 16:25:55 2021
 
 octects = ['0F','04','78','56','07','03','20','44','56','78','56','38','92','00','92','20','60','56','78','56','00','03','00','56','04','56','38','92','08','08','D4']
 
-def IPOptions(octects):
+def IPOptions(octects):         #takes as argument all the Options octects(thta can be found in lines 115 and 116)
     Opts = { 0: "End of Options List (EOOL)", 1: "No Operation (NOP)", 7: "Record Route (RR)", 68: "Time Stamp (TS)", 131: "Loose Source Route (LSR)", 137: "Strict Source Route (SSR)"}
-    while len(octects) > 0 :
-        o = int(octects[0],16)
-        Opt = Opts.get(o, "Option unconnu")
-        print(f"\t{o}: {Opt}.")
+    while len(octects) > 0 :    #loops while the list of octects of Options is longer than 0
+        o = int(octects[0],16)          #takes first octect to find type of option
+        Opt = Opts.get(o, "Option unconnu")         #finds option in directory
+        print(f"\t{o}: {Opt}.")                     #prints option name
         if o == 0:  #im not quite suere about how the EOOL works or padding either, need to consult this
             break
         else:
-            L = octects[1]
-            L_dec = int(L,16)
+            L = octects[1]                      #looks at length of each option
+            L_dec = int(L,16)                   #converts length into decimal
             print("\t\tLa longueur de l'option est de", L_dec, "octects.")
-            V = octects[2:L_dec]
+            V = octects[2:L_dec]                #recovers data part of option
             V = ''.join(V)
-            V = hex(int(V,16))
+            V = hex(int(V,16))                  #format data into a single hexadecimal
             print("\t\tLa valeur de l'option est", V)
-            octects = octects[L_dec:]
+            octects = octects[L_dec:]           #chops off the option to look for the next one
             
 
 #Function IP is gonna return a directory with first the new octect list
