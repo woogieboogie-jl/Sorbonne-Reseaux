@@ -42,7 +42,7 @@ def UDP(octects):
     
     if DP == 53:
         DNS= True
-    if DP == 67 or DP==68:
+    if SP == 67 or DP==68:
         DHCP = True
         
       
