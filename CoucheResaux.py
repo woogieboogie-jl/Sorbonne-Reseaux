@@ -85,7 +85,7 @@ def getSourceAddr(octets):
 
 def getDestinAddr(octets):
     SD = f"{int(octets[16],16)}.{int(octets[17],16)}.{int(octets[18],16)}.{int(octets[19],16)}"
-    return f"Source Address: {SD}"
+    return f"Destination Address: {SD}"
 
 
 def getOpts(octets):
@@ -111,7 +111,7 @@ def getOpts(octets):
     return "\n".join(opts_out)
 
     
-    # returns string of data regarding Network Layer + boolean that checks if UDP value is true or not
+    # returns a dictionary with string of data regarding Network Layer + boolean that checks if UDP value is true or not
 def parserNetwork(octets):
     proto_s, is_UDP = getProto(octets)
     IHL_s, IHL = getIHL(octets)
