@@ -25,8 +25,8 @@ No options avaliable for this packet.
 
 Source Port: 68(DHCP)
 Destination Port: 67(DHCP)
-Length: 1795
-Checksum: 8260(0b10000001000100)
+Length: 308
+Checksum: 59771(0b1110100101111011)
 
 ----------------------------------
 
@@ -52,8 +52,8 @@ No options avaliable for this packet.
 
 Source Port: 67(DHCP)
 Destination Port: 68(DHCP)
-Length: 1795
-Checksum: 8260(0b10000001000100)
+Length: 556
+Checksum: 29219(0b111001000100011)
 
 ----------------------------------
 
@@ -79,8 +79,8 @@ No options avaliable for this packet.
 
 Source Port: 68(DHCP)
 Destination Port: 67(DHCP)
-Length: 1795
-Checksum: 8260(0b10000001000100)
+Length: 308
+Checksum: 44677(0b1010111010000101)
 
 ----------------------------------
 
@@ -106,8 +106,8 @@ No options avaliable for this packet.
 
 Source Port: 67(DHCP)
 Destination Port: 68(DHCP)
-Length: 1795
-Checksum: 8260(0b10000001000100)
+Length: 556
+Checksum: 28451(0b110111100100011)
 
 ----------------------------------
 
@@ -133,8 +133,8 @@ No options avaliable for this packet.
 
 Source Port: 68(DHCP)
 Destination Port: 67(DHCP)
-Length: 1795
-Checksum: 8260(0b10000001000100)
+Length: 308
+Checksum: 9376(0b10010010100000)
 
 ----------------------------------
 
@@ -160,8 +160,8 @@ No options avaliable for this packet.
 
 Source Port: 67(DHCP)
 Destination Port: 68(DHCP)
-Length: 1795
-Checksum: 8260(0b10000001000100)
+Length: 556
+Checksum: 32053(0b111110100110101)
 
 ----------------------------------
 
@@ -187,8 +187,8 @@ No options avaliable for this packet.
 
 Source Port: 68(DHCP)
 Destination Port: 67(DHCP)
-Length: 1795
-Checksum: 8260(0b10000001000100)
+Length: 308
+Checksum: 21839(0b101010101001111)
 
 ----------------------------------
 
@@ -214,8 +214,8 @@ No options avaliable for this packet.
 
 Source Port: 68(DHCP)
 Destination Port: 67(DHCP)
-Length: 1795
-Checksum: 8260(0b10000001000100)
+Length: 308
+Checksum: 646(0b1010000110)
 
 ----------------------------------
 
@@ -241,8 +241,8 @@ No options avaliable for this packet.
 
 Source Port: 67(DHCP)
 Destination Port: 68(DHCP)
-Length: 1795
-Checksum: 8260(0b10000001000100)
+Length: 556
+Checksum: 35629(0b1000101100101101)
 
 ----------------------------------
 
@@ -268,8 +268,8 @@ No options avaliable for this packet.
 
 Source Port: 68(DHCP)
 Destination Port: 67(DHCP)
-Length: 1795
-Checksum: 8260(0b10000001000100)
+Length: 308
+Checksum: 51087(0b1100011110001111)
 
 ----------------------------------
 
@@ -295,8 +295,8 @@ No options avaliable for this packet.
 
 Source Port: 67(DHCP)
 Destination Port: 68(DHCP)
-Length: 1795
-Checksum: 8260(0b10000001000100)
+Length: 556
+Checksum: 34861(0b1000100000101101)
 
 ----------------------------------
 
@@ -322,5 +322,5 @@ No options avaliable for this packet.
 
 Source Port: 67(DHCP)
 Destination Port: 68(DHCP)
-Length: 1795
-Checksum: 8260(0b10000001000100)
+Length: 324
+Checksum: 50830(0b1100011010001110)

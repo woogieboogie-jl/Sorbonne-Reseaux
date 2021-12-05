@@ -1,8 +1,3 @@
-#UDP
-
-#this function will only be used if in the IP level UDP = true
-
-octects = ['0F','04','78','56','07','03','20','44','56','78','56','38','92','00','92','20','60','56','78','56','00','03','00','56','04','56','38','92','08','08','D4']
 port_dict = { 53: "DNS", 67: "DHCP", 68: "DHCP" }
 
 def getSourcePort(octets):
@@ -14,10 +9,10 @@ def getDestinPort(octets):
     return f"Destination Port: {DP}({port_dict.get(DP, 'Client')})", DP
 
 def getLength(octets):
-    return f"Length: {int(octects[4] + octects[5],16)}"
+    return f"Length: {int(octets[4] + octets[5],16)}"
 
 def getCS(octets):
-    CS = int(octects[6]+octects[7],16)
+    CS = int(octets[6]+octets[7],16)
     return f"Checksum: {CS}({bin(CS)})"
 
 
@@ -39,11 +34,12 @@ def protoUDP(octets):
     parsed_dict = {"packet": octets[8:], "utility": port_appli, "analysis": "\n".join(elements)}
     return parsed_dict
 
-
-
-
 def protoTCP(octets):
     pass
+
+
+
+
 
 def parserTransport(network_dict):
     proto = network_dict["protocol"]
