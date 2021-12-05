@@ -1,6 +1,7 @@
 import os
 import datalink
 import network
+import transport
 import hexdecoder
 import iohandler
 
@@ -43,18 +44,20 @@ def parser(hex_list):
 
 def main():
     frames = parser(initiate())
-    output_single = []
-    output_multiple = [f"===============RESULTS================\n*{len(frames)} Frames in total"]
+    output_multiple = [f"===============RESULTS================\n* {len(frames)} Frames in total"]
     for octets in frames:
+        output_single = []
         datalink_dict = datalink.parserDatalink(octets)
-        network_dict = network.parserNetwork(datalink_dict["packet"])
+        network_dict = network.parserNetwork(datalink_dict)
+        transport_dict = transport.parserTransport(network_dict)
 
         output_single.append(datalink_dict["analysis"])
         output_single.append(network_dict["analysis"])
+        output_single.append(transport_dict["analysis"])
         text_single = "\n\n".join(output_single)
         output_multiple.append(text_single)
 
-    text_out = "\n\n\n----------------------------------\n\n\n".join(output_multiple)
+    text_out = "\n\n----------------------------------\n\n".join(output_multiple)
     print(text_out)
     iohandler.fileoutput(output=text_out)
 

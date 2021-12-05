@@ -71,10 +71,11 @@ def getType(octets):
     "F1C1"	: "Redundancy Tag (IEEE 802.1CB Frame Replication and Elimination for Reliability)",
     }
     type = ''.join(octets[12:14])
-    return f"Type: {type_dict.get(type, f'Unknown({type})')}"
+    return f"Type: {type_dict.get(type, f'Unknown({type})')}", type
 
 
-
+def typeARP(octets):
+    pass
 
 
 
@@ -83,14 +84,15 @@ def getType(octets):
 
     # returns a dictionary with string of data regarding Network Layer + boolean that checks if UDP value is true or not
 def parserDatalink(octets):
+    type_s, type = getType(octets)
 
     elements = [
         getSourceMAC(octets), 
         getDestinMAC(octets), 
-        getType(octets), 
+        type_s,
     ]
     
-    parsed_dict = {"packet": octets[14:], "analysis": "\n".join(elements)}
+    parsed_dict = {"packet": octets[14:], "type": type, "analysis": "\n".join(elements)}
     return parsed_dict
 
 
@@ -98,6 +100,7 @@ def parserDatalink(octets):
 if __name__ == "__main__":
     network = parserDatalink(octets)
     print(network["analysis"])
+    print(network["type"])
     print(network["packet"])
     
 
