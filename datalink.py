@@ -70,8 +70,15 @@ def getType(octets):
     "9000"	: "Ethernet Configuration Testing Protocol[12]",
     "F1C1"	: "Redundancy Tag (IEEE 802.1CB Frame Replication and Elimination for Reliability)",
     }
-    type = ''.join(octets[13:15])
+    type = ''.join(octets[12:14])
     return f"Type: {type_dict.get(type, f'Unknown({type})')}"
+
+
+
+
+
+
+
 
 
     # returns a dictionary with string of data regarding Network Layer + boolean that checks if UDP value is true or not

@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Dec  3 18:53:12 2021
-
-@author: paulamendez
-"""
-
 #UDP
 
 #this function will only be used if in the IP level UDP = true

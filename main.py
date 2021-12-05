@@ -1,5 +1,6 @@
 import os
 import datalink
+import network
 import hexdecoder
 import iohandler
 
@@ -30,7 +31,7 @@ def initiate():
             print("WRONG DIRECTORY! PLEASE TYPE THE RIGHT DIRECTORY!...")
             continue
 
-        
+
 
 def parser(hex_list):
     hex_list_filtered = hexdecoder.filterData(hex_list)
@@ -41,10 +42,21 @@ def parser(hex_list):
 
 
 def main():
-    hex_list = initiate()
-    hex_parsed = parser(hex_list)
-    print(hex_parsed)
+    frames = parser(initiate())
+    output_single = []
+    output_multiple = [f"===============RESULTS================\n*{len(frames)} Frames in total"]
+    for octets in frames:
+        datalink_dict = datalink.parserDatalink(octets)
+        network_dict = network.parserNetwork(datalink_dict["packet"])
 
+        output_single.append(datalink_dict["analysis"])
+        output_single.append(network_dict["analysis"])
+        text_single = "\n\n".join(output_single)
+        output_multiple.append(text_single)
+
+    text_out = "\n\n\n----------------------------------\n\n\n".join(output_multiple)
+    print(text_out)
+    iohandler.fileoutput(output=text_out)
 
 if __name__ == "__main__":
     main()

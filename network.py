@@ -1,15 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Sun Nov 28 16:25:55 2021
-
-@author: paulamendez & woogieboogie
-"""
-
-#project Résaux: NetWork Layer
-
-# comment: I tried to seperate all the functions seperately in case we have to look for individual values / strings later in other layers.
-
 from hexdecoder import isHex
 
     
@@ -110,7 +98,12 @@ def getOpts(octets):
                 opt_list = opt_list[opt_len:]
     return "\n".join(opts_out)
 
-    
+
+
+
+
+
+
     # returns a dictionary with string of data regarding Network Layer + boolean that checks if UDP value is true or not
 def parserNetwork(octets):
     proto_s, is_UDP = getProto(octets)
