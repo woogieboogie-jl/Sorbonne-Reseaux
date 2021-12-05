@@ -2,6 +2,7 @@ import os
 import datalink
 import network
 import transport
+import application
 import hexdecoder
 import iohandler
 
@@ -50,10 +51,12 @@ def main():
         datalink_dict = datalink.parserDatalink(octets)
         network_dict = network.parserNetwork(datalink_dict)
         transport_dict = transport.parserTransport(network_dict)
+        application_dict = application.parserApplication(transport_dict)
 
         output_single.append(datalink_dict["analysis"])
         output_single.append(network_dict["analysis"])
         output_single.append(transport_dict["analysis"])
+        output_single.append(application_dict["analysis"])
         text_single = "\n\n".join(output_single)
         output_multiple.append(text_single)
 

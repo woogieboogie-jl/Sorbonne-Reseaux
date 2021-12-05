@@ -111,7 +111,7 @@ def typeIPV4(octets):
     ]
     
     if int(str(octets[0])[1],16) == 5:
-        elements.append("No options avaliable for this packet.")
+        elements.append("No options avaliable")
     elif int(str(octets[0])[1],16) > 5:
         elements.append(getOpts(octets))
     else:

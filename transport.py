@@ -18,6 +18,7 @@ def getCS(octets):
 
 
 
+
 def protoUDP(octets):
     SP_s, SP = getSourcePort(octets)
     DP_s, DP = getDestinPort(octets)
@@ -31,11 +32,12 @@ def protoUDP(octets):
         getCS(octets),
     ]
     
-    parsed_dict = {"packet": octets[8:], "utility": port_appli, "analysis": "\n".join(elements)}
+    parsed_dict = {"datagram": octets[8:], "utility": port_appli, "analysis": "\n".join(elements)}
     return parsed_dict
 
 def protoTCP(octets):
     pass
+
 
 
 
