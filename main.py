@@ -46,8 +46,8 @@ def parser(hex_list):
 def main():
     frames = parser(initiate())
     output_multiple = [f"===============RESULTS================\n* {len(frames)} Frames in total"]
-    for octets in frames:
-        output_single = []
+    for idx, octets in enumerate(frames):
+        output_single = [f"\n* {(idx+1)} of {len(frames)} *\n"]
         datalink_dict = datalink.parserDatalink(octets)
         network_dict = network.parserNetwork(datalink_dict)
         transport_dict = transport.parserTransport(network_dict)
