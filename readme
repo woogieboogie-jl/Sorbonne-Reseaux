@@ -30,4 +30,10 @@ in the frame such as ICMP or TCP but it is not able to further analyse its champ
 
 #STRUCTURE
 
+The program is organized similarly to the different layers that the network protocol is made of. 
+The main program can be found in 'main.py'. This code retrieves the input from the user, as well as combines all the elements of the tool.
+It generates the parsing function from the imported 'hexdecoder.py' and imports the functions that analyse the different layers.
+The parsing function takes care of rearranging the information from the input file in order to generate strings of octects that can be 
+analysed by the protocol functions. 
+
 
