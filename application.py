@@ -363,7 +363,7 @@ def Answers(octets, cnt, octets_dns):
 
 
 def Authority(octets, cnt, octets_dns):
-    answers_list = ["Authoritys:"]
+    answers_list = ["Authorities:"]
     idx = 0
     idx_abs = len(octets_dns) - len(octets)
     if len(octets)==0 or cnt ==0:
