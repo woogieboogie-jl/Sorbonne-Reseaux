@@ -77,6 +77,7 @@ def getCHAddr(octets, htype):
 
 def getOptSName(octets):
     sname_data = ''.join(octets[44:108])
+    print(sname_data)
     if int(sname_data,16) == 0:
         return f"\tServer Host Name: None (Not Given)"
     else:

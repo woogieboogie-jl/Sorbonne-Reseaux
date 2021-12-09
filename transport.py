@@ -42,6 +42,10 @@ def protoUDP(octets, proto):
 def protoTCP(octets):
     pass
 
+def protoOthers(octets,proto):
+    print(octets)
+    
+
 
 
 
@@ -49,11 +53,14 @@ def protoTCP(octets):
 
 def parserTransport(network_dict):
     proto = network_dict["protocol"]
+    print(proto)
     octets = network_dict["segment"]
     if proto == "UDP":
         transport_dict = protoUDP(octets,proto)
     elif proto == "TCP":
         transport_dict = protoTCP(octets,proto)
+    else:
+        transport_dict = protoOthers(octets,proto)
     return transport_dict
 
 
