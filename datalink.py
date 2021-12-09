@@ -5,11 +5,11 @@ octets = ['00', '14', 'F6', '9F', 'F4', '40', '00', '10', 'DB', '10', '08', '10'
 
 
 def getSourceMAC(octets):
-    return f"Source MAC: {'.'.join(octets[0:6])}"
+    return f"\tSource MAC: {'.'.join(octets[0:6])}"
 
 
 def getDestinMAC(octets):
-    return f"Destination MAC: {'.'.join(octets[6:12])}"
+    return f"\tDestination MAC: {'.'.join(octets[6:12])}"
 
 
 def getType(octets):
@@ -71,13 +71,15 @@ def getType(octets):
     "F1C1"	: "Redundancy Tag (IEEE 802.1CB Frame Replication and Elimination for Reliability)",
     }
     type = ''.join(octets[12:14])
-    return f"Type: {type_dict.get(type, f'Unknown({type})')}", type
+    return f"\tType: {type_dict.get(type, f'Unknown({type})')}", type
 
 
 def typeARP(octets):
     pass
 
 
+def getTitleEth():
+    return f"Ethernet Protocol:------------------------------------------\n"
 
 
 
@@ -87,6 +89,7 @@ def parserDatalink(octets):
     type_s, type = getType(octets)
 
     elements = [
+        getTitleEth(),
         getSourceMAC(octets), 
         getDestinMAC(octets), 
         type_s,
@@ -97,11 +100,11 @@ def parserDatalink(octets):
 
 
 
-if __name__ == "__main__":
-    network = parserDatalink(octets)
-    print(network["analysis"])
-    print(network["type"])
-    print(network["packet"])
+# if __name__ == "__main__":
+#     network = parserDatalink(octets)
+#     print(network["analysis"])
+#     print(network["type"])
+#     print(network["packet"])
     
 
 

@@ -57,12 +57,14 @@ def main():
         output_single.append(network_dict["analysis"])
         output_single.append(transport_dict["analysis"])
         output_single.append(application_dict["analysis"])
-        text_single = "\n\n".join(output_single)
+        text_single = "\n\n\n\n\n".join(output_single)
+        
         output_multiple.append(text_single)
 
     text_out = "\n\n----------------------------------\n\n".join(output_multiple)
     print(text_out)
     iohandler.fileoutput(output=text_out)
+    
 
 if __name__ == "__main__":
     main()

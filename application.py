@@ -27,69 +27,69 @@ dhcp_msg_dict = {
 
 def getOPCode(octets):
     op = int(octets[0],16)
-    return f"Operation Code: {op}({dhcp_op_dict.get(op, 'Unknown')})", op
+    return f"\tOperation Code: {op}({dhcp_op_dict.get(op, 'Unknown')})", op
 
 def getHtype(octets):
     htype = int(octets[1], 16)
-    return f"Hardware Address Type: {htype}({dhcp_htype_dict.get(htype, 'Unknown')})", htype
+    return f"\tHardware Address Type: {htype}({dhcp_htype_dict.get(htype, 'Unknown')})", htype
 
 def getHLength(octets):
     hlen = int(octets[2],16)*8
-    return f"Length: {hlen} octets"
+    return f"\tLength: {hlen} octets"
 
 def getHops(octets):
-    return f"Hops: {int(octets[3],16)}"
+    return f"\tHops: {int(octets[3],16)}"
 
 def getCIID(octets):
-    return f"Client ID: {int(octets[4]+octets[5]+octets[6]+octets[7],16)}"
+    return f"\tClient ID: {int(octets[4]+octets[5]+octets[6]+octets[7],16)}"
 
 def getSTime(octets):
     ST = int(octets[8]+octets[9],16)
-    return f"Start Time: {ST}"
+    return f"\tStart Time: {ST}"
 
 def getFlags(octets):
     flags = octets[10]+octets[11]
-    return f"Flags: {flags}"
+    return f"\tFlags: {flags}"
 
 def getCIAddr(octets):
     ciaddr = '.'.join([str(int(octet, 16)) for octet in octets[12:16]])
-    return f"Client Address: {ciaddr}"
+    return f"\tClient Address: {ciaddr}"
 
 def getYIAddr(octets):
     yiaddr = '.'.join([str(int(octet, 16)) for octet in octets[16:20]])
-    return f"Offered Address: {yiaddr}"
+    return f"\tOffered Address: {yiaddr}"
 
 def getSIAddr(octets):
     siaddr = '.'.join([str(int(octet, 16)) for octet in octets[20:24]])
-    return f"Server Address: {siaddr}"
+    return f"\tServer Address: {siaddr}"
 
 def getGIAddr(octets):
     giaddr = '.'.join([str(int(octet, 16)) for octet in octets[24:28]])
-    return f"Relay Agent Address: {giaddr}"
+    return f"\tRelay Agent Address: {giaddr}"
 
 def getCHAddr(octets, htype):
     if htype == 1:
         chaddr = '.'.join(octets[28:34])
-        return f"Client Hardware Address: {chaddr}({dhcp_htype_dict.get(htype)})"
+        return f"\tClient Hardware Address: {chaddr}({dhcp_htype_dict.get(htype)})"
     else:
         chaddr = '-'.join(octets[28:44])
-        return f"Client Hardware Address: {chaddr}({dhcp_htype_dict.get(htype)})"
+        return f"\tClient Hardware Address: {chaddr}({dhcp_htype_dict.get(htype)})"
 
 def getOptSName(octets):
     sname_data = ''.join(octets[44:108])
     if int(sname_data,16) == 0:
-        return f"Server Host Name: None (Not Given)"
+        return f"\tServer Host Name: None (Not Given)"
     else:
         sname = (sname_data).decode("hex")
-        return f"Server Host Name: {sname}"
+        return f"\tServer Host Name: {sname}"
 
 def getOptFName(octets):
     bname_data = ''.join(octets[108:236])
     if int(bname_data,16) == 0:
-        return f"Boot File Name: None (Not Given)"
+        return f"\tBoot File Name: None (Not Given)"
     else:
         bname = (bname_data).decode("hex")
-        return f"Boot File Name: {bname}"
+        return f"\tBoot File Name: {bname}"
 
 def getOptions(octets):
     opts_out = ["Options"]
@@ -103,7 +103,7 @@ def getOptions(octets):
         while len(opt_list) > 0:
             o = int(opt_list[0], 16)
             opt = dhcp_opt_dict.get(o, "Unknown Option")
-            opts_out.append(f"\t{o}: {opt}")
+            opts_out.append(f"\t\t{o}: {opt}")
             if o == 255:
                 break
             else:
@@ -111,17 +111,19 @@ def getOptions(octets):
                 print(opt_list[1])
                 print(opt_list[2])
                 opt_len = int(opt_list[1], 16)
-                opts_out.append(f"\t\tOption Length: {opt_len} bytes")
+                opts_out.append(f"\t\t\tOption Length: {opt_len} bytes")
                 opt_val_hex = ''.join(opt_list[2:2+opt_len])
                 opt_val_dec = int(opt_val_hex, 16)
                 if o==53:
-                    opts_out.append(f"\t\tDHCP Message: {dhcp_msg_dict[opt_val_dec]} ({opt_val_hex})")
+                    opts_out.append(f"\t\t\tDHCP Message: {dhcp_msg_dict[opt_val_dec]} ({opt_val_hex})")
                 else:    
-                    opts_out.append(f"\t\tOption Value: {opt_val_dec} ({opt_val_hex})")
+                    opts_out.append(f"\t\t\tOption Value: {opt_val_dec} ({opt_val_hex})")
                 opt_list = opt_list[2+opt_len:]
     return "\n".join(opts_out), opt_list
 
 
+def getTitleDHCP():
+    return f"DHCP Protocol:-----------------------------------------------\n"
 
 
 def DHCP(octets):
@@ -129,6 +131,7 @@ def DHCP(octets):
     htype_s, htype = getHtype(octets)
     opt_s, opt_list = getOptions(octets)
     elements = [
+        getTitleDHCP(),
         OP_s,
         htype_s,
         getHLength(octets),
@@ -175,7 +178,7 @@ type_rr_dict = {1: 'A', 28: 'AAAA', 5: 'CNAME', 2: 'NS', 15: 'MX'}
 def Identification(octets):
     #Identification
     I = hex(int(octets[0]+octets[1],16))
-    return f"Transaction ID: {I}"
+    return f"\tTransaction ID: {I}"
     
 def Control(octets):
     opcode_dic = {0: 'Query', 1: 'Inverse Query', 2:'Status', 3:'Unassigned', 4:'Notify', 5:'Update', 6:'DNS Stateful Operations'}
@@ -194,38 +197,38 @@ def Control(octets):
     rcode = rcode_dic.get(int(C[12:],2), "Unknown")                                             # Reply Code
     
     return f"""
-Control:
-    Message: {QR}
-    Opcode: {opcode} (0b{C[1:5]})
-    Authoritative: {AA}
-    Truncated: {TC}
-    Recursion Desired: {RD}
-    Recursion Avaliable: {RA}
-    Z: {Z}
-`   Authenticated Data: {Z_AD}
-    Checking Disabled: {Z_CD}
-    Reply Code: {rcode}
+\tControl:
+    \tMessage: {QR}
+    \tOpcode: {opcode} (0b{C[1:5]})
+    \tAuthoritative: {AA}
+    \tTruncated: {TC}
+    \tRecursion Desired: {RD}
+    \tRecursion Avaliable: {RA}
+    \tZ: {Z}
+    \tAuthenticated Data: {Z_AD}
+    \tChecking Disabled: {Z_CD}
+    \tReply Code: {rcode}
 """
          
 def QuestionC(octets):   
     #Question count
     QC = int(octets[4] + octets[5],16)
-    return f"Number of Questions: {QC}", QC
+    return f"\tNumber of Questions: {QC}", QC
 
 def AnswerC(octets):
     #Answer count
     AC = int(octets[6]+octets[7],16)
-    return f"Number of Answers: {AC}", AC
+    return f"\tNumber of Answers: {AC}", AC
     
 def AuthorityC(octets):
     #Authority count
     AUC = int(octets[8]+octets[9],16)
-    return f"Number of Authority Resource Records: {AUC}", AUC
+    return f"\tNumber of Authority Resource Records: {AUC}", AUC
     
 def AdditionalC(octets):
     #Additional count
     ADC = int(octets[10]+octets[11],16)
-    return f"Number of Additional RRs: {ADC}", ADC
+    return f"\tNumber of Additional RRs: {ADC}", ADC
     
 def Questions(octets, cnt):
     octets = octets[12:]
@@ -248,7 +251,7 @@ def Questions(octets, cnt):
     q_name = "".join(q_name_list)
     q_type = type_rr_dict.get(q_type_val, 'Unknown')
     q_class = hex(q_class_val)
-    return f"Questions:\n\n Name: {q_name}\n Type: {q_type} \n Class: {q_class}", octets_out
+    return f"Questions:\n\n\t\tName: {q_name}\n\t\tType: {q_type}\n\t\tClass: {q_class}", octets_out
 
 def getName(octets_dns, c, bool1, bool2):
     c_val = format(int(c,16), '016b')
@@ -284,7 +287,7 @@ def Answers(octets, cnt, octets_dns):
     idx_abs = len(octets_dns) - len(octets)
     if len(octets)==0 or cnt ==0:
         pass
-        return "Answers Resource Records: None"
+        return "\tAnswers Resource Records: None"
     else:
         while cnt!=0:
             if octets[0] == "00":
@@ -300,18 +303,17 @@ def Answers(octets, cnt, octets_dns):
                     else:
                         address = getName(octets_dns,hex(idx+idx_abs)[2:], False, True)
                 answer = [
-                    f" Name: {getName(octets_dns, octets[0]+octets[1], False, True)}",
-                    f" Type: {type}",
-                    f" Class: {int(''.join(octets[4:6]),16)}",
-                    f" Time to live: {int(''.join(octets[6:10]),16)}",
-                    f" Data Length: {length}",
-                    f" Address: {address}",
+                    f" \t\tName: {getName(octets_dns, octets[0]+octets[1], False, True)}",
+                    f" \t\tType: {type}",
+                    f" \t\tClass: {int(''.join(octets[4:6]),16)}",
+                    f" \t\tTime to live: {int(''.join(octets[6:10]),16)}",
+                    f" \t\tData Length: {length}",
+                    f" \t\tAddress: {address}",
                 ]
                 answers_list.append("\n".join(answer))
                 octets = octets[12+length:]
                 idx += 12+length
                 cnt -= 1
-                print(octets)
                 if len(octets) == 0:
                     return "\n\n".join(answers_list), octets
         return "\n\n".join(answers_list), octets
@@ -353,7 +355,7 @@ def Authority(octets, cnt, octets_dns):
     idx_abs = len(octets_dns) - len(octets)
     if len(octets)==0 or cnt ==0:
         pass
-        return "Authority Resource Records: None"
+        return "\tAuthority Resource Records: None"
     else:
         while cnt != 0:
             if octets[0] == "00":
@@ -369,12 +371,12 @@ def Authority(octets, cnt, octets_dns):
                     else:
                         address = getName(octets_dns,hex(idx+idx_abs)[2:], False, True)
                 answer = [
-                    f" Name: {getName(octets_dns, octets[0]+octets[1], False, True)}",
-                    f" Type: {type}",
-                    f" Class: {int(''.join(octets[4:6]),16)}",
-                    f" Time to live: {int(''.join(octets[6:10]),16)}",
-                    f" Data Length: {length}",
-                    f" Address: {address}",
+                    f" \t\tName: {getName(octets_dns, octets[0]+octets[1], False, True)}",
+                    f" \t\tType: {type}",
+                    f" \t\tClass: {int(''.join(octets[4:6]),16)}",
+                    f" \t\tTime to live: {int(''.join(octets[6:10]),16)}",
+                    f" \t\tData Length: {length}",
+                    f" \t\tAddress: {address}",
                 ]
                 answers_list.append("\n".join(answer))
                 octets = octets[12+length:]
@@ -392,7 +394,7 @@ def Additional(octets, cnt, octets_dns):
     idx_abs = len(octets_dns) - len(octets)
     if len(octets)==0 or cnt ==0:
         pass
-        return "Additional Resource Records: None"
+        return "\tAdditional Resource Records: None"
     else:
         while cnt != 0:
             if octets[0] == "00":
@@ -408,12 +410,12 @@ def Additional(octets, cnt, octets_dns):
                     else:
                         address = getName(octets_dns,hex(idx+idx_abs)[2:], False, True)
                 answer = [
-                    f" Name: {getName(octets_dns, octets[0]+octets[1], False, True)}",
-                    f" Type: {type}",
-                    f" Class: {int(''.join(octets[4:6]),16)}",
-                    f" Time to live: {int(''.join(octets[6:10]),16)}",
-                    f" Data Length: {length}",
-                    f" Address: {address}",
+                    f" \t\tName: {getName(octets_dns, octets[0]+octets[1], False, True)}",
+                    f" \t\tType: {type}",
+                    f" \t\tClass: {int(''.join(octets[4:6]),16)}",
+                    f" \t\tTime to live: {int(''.join(octets[6:10]),16)}",
+                    f" \t\tData Length: {length}",
+                    f" \t\tAddress: {address}",
                 ]
                 answers_list.append("\n".join(answer))
                 octets = octets[12+length:]
@@ -423,16 +425,20 @@ def Additional(octets, cnt, octets_dns):
                     return "\n\n".join(answers_list), octets
         return "\n\n".join(answers_list), octets
 
-            
+def getTitleDNS():
+    return f"DNS Protocol:------------------------------------------------\n"          
+
+
 def DNS(octets):
     octets_dns = octets
     ques_s, ques_cnt = QuestionC(octets)                # Questions Count
-    answ_s, answ_cnt   = AnswerC(octets)                # Answers Count
+    answ_s, answ_cnt = AnswerC(octets)                # Answers Count
     auth_s, auth_cnt = AuthorityC(octets)               # Authority Count
     addi_s, addi_cnt = AdditionalC(octets)              # Additional Count
 
 
     elements = [
+        getTitleDNS(),
         Identification(octets),             # Identification
         Control(octets) + "\n",                    # Control
         ques_s,
@@ -443,30 +449,30 @@ def DNS(octets):
 
     # Questions
     if len(octets) == 0:
-        elements.append("Questions: None\n\n")
+        elements.append("\tQuestions: None\n\n")
     else:
         que_s, octets = Questions(octets, ques_cnt)
-        elements.append(que_s+"\n\n")
+        elements.append("\t"+que_s+"\n\n")
     # Answers    
     if len(octets) == 0:
-        elements.append("Answers: None\n\n")
+        elements.append("\tAnswers: None\n\n")
     else:
         ans_s, octets = Answers(octets, answ_cnt, octets_dns)
-        elements.append(ans_s+"\n\n")
+        elements.append("\t"+ans_s+"\n\n")
 
     # Authorities    
     if len(octets) == 0:
-        elements.append("Authority RRs: None\n\n")
+        elements.append("\tAuthority RRs: None\n\n")
     else:
         aut_s, octets = Authority(octets, auth_cnt, octets_dns)
-        elements.append(aut_s+"\n\n")
+        elements.append("\t"+aut_s+"\n\n")
 
     # Additionals    
     if len(octets) == 0:
-        elements.append("Additional RRs: None\n\n")
+        elements.append("\tAdditional RRs: None\n\n")
     else:
         add_s, seg_left = Additional(octets, addi_cnt, octets_dns)
-        elements.append(add_s+"\n\n")
+        elements.append("\t"+add_s+"\n\n")
 
     parsed_dict = {"analysis": "\n".join(elements)}
     try:
