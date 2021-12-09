@@ -1,4 +1,4 @@
-import os
+import os, sys
 import datalink
 import network
 import transport
@@ -6,9 +6,32 @@ import application
 import hexdecoder
 import iohandler
 
+config_name = 'myapp.cfg'
+
+# determine if application is a script file or frozen exe
+if getattr(sys, 'frozen', False):
+    application_path = os.path.dirname(sys.executable)
+elif __file__:
+    application_path = os.path.dirname(__file__)
+
+config_path = os.path.join(application_path, config_name)
+
 def initiate():
+    print("""
+  _                             _                        
+ |_) ._ _  o  _   _ _|_   __   |_)  _   _  _   _.        
+ |   | (_) | (/_ (_  |_        | \ (/_ _> (/_ (_| |_| >< 
+          _|    
+                            by Jaewook Lee && Paula Mendez
+    """)
     while True:
-        path_input = input("input working directory, press enter if you wish to analyze in current directory...")
+        path_input = input(f"""
+
+1. input your working directory(absolute path) and press enter
+2. if you wish to in the default directory, press enter
+
+* your current working directory is : {os.path.abspath(os.getcwd())}
+""")
         try:
             if path_input:
                 os.chdir(path_input)
@@ -16,21 +39,21 @@ def initiate():
             print("----------AVALIABLE TEXT FILES-----------")
             for file in text_list:
                 print(file)
-            
+            print("\n")
             while True:
                 file_input =input("input filename...")
-                path = os.path.abspath(os.getcwd()) + "/" + file_input
+                filepath = os.path.abspath(os.getcwd()) + "/" + file_input
                 try:
-                    file = iohandler.fileinput(path)
+                    file = iohandler.fileinput(filepath)
                     return file
                 except FileNotFoundError:
-                    print("FILE NOT FOUND! PLEASE TYPE THE RIGHT FILENAME!...")  
+                    print("! FILE NOT FOUND PLEASE TYPE THE RIGHT FILENAME!")  
                 except IsADirectoryError:
-                    print("INPUT FILENAME, NOT DIRECTORY!...")
-    
-            
+                    print("! NOT FOUND: INPUT A PROPER FILENAME")
+
+        
         except (FileNotFoundError, NotADirectoryError) as e:
-            print("WRONG DIRECTORY! PLEASE TYPE THE RIGHT DIRECTORY!...")
+            print("! WRONG DIRECTORY, PLEASE TYPE THE RIGHT DIRECTORY!")
             continue
 
 
