@@ -1,5 +1,3 @@
-import copy
-
 dhcp_op_dict = { 1: "DNS Request Client", 2: "DHCP Reply Server"}
 dhcp_htype_dict = {
     1: "Ethernet",
