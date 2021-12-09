@@ -58,6 +58,7 @@ def main():
         output_single.append(transport_dict["analysis"])
         output_single.append(application_dict["analysis"])
         text_single = "\n\n\n\n\n".join(output_single)
+
         
         output_multiple.append(text_single)
 

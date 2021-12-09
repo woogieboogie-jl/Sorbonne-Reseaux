@@ -14,7 +14,19 @@ dhcp_htype_dict = {
     19: "Asynchronus Transfer Node(ATM)",
     20: "Serial Line",
 }
-dhcp_opt_dict = { 255: "End of Options List (EOOL)", 53: "DHCP Message"}
+dhcp_opt_dict = {1: "Subnet Mask", 2: "Time Offset", 3: "Router", 4: "Time Server",\
+                 5: "Name Server", 6: "Domain Server", 7: "Log Server", \
+                 8: "Quotes Server", 54: "DHCP Server Id", 51: "Adress Time", \
+                 43: "Vendor Specific", 12:"Hostname",  9: "LPR Server", \
+                 10: "Impress Server", 11: "RLP Server", 13: "Boot File Size", \
+                 14: "Merit Dump File", 15: "Domain Name", 16: "Swap Server", \
+                 17: "Root Path", 18: "Extension File", 19: "Forward On/Off", \
+                 24: "MTU Timeout", 25: "MTU Plateau", 26: "MTU Interface", \
+                 27: "MTU Subnet", 28: "Broadcast Adress", 29: "Mask Discovery", \
+                 30: "Mask Supplier", 31: "Router Discovery", 32: "Router Request", \
+                 33: "Static Route", 34: "Trailers", 35: "ARP Timeout", \
+                 36: "Ethernet", 37: "Default TCP TTL", 38: "Keepalive Time", \
+                 255: "End of Options List (EOOL)", 53: "DHCP Message Type"}
 dhcp_msg_dict = {
     1:     "DHCPDISCOVER",
     2:     "DHCPOFFER",
