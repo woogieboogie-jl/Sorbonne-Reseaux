@@ -29,7 +29,7 @@ def initiate():
                     print("INPUT FILENAME, NOT DIRECTORY!...")
     
             
-        except FileNotFoundError:
+        except (FileNotFoundError, NotADirectoryError) as e:
             print("WRONG DIRECTORY! PLEASE TYPE THE RIGHT DIRECTORY!...")
             continue
 
