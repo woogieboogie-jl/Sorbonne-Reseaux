@@ -1,3 +1,5 @@
+octets = ["00","14","0b","33","33","27","d0","7a","b5","96","cd","0a","08","00","45","00","01","96","00","00","40","00","40","11","b5","a0","c0","a8","01","01","c0","a8","01","65","00","35","df","df","01","82","3e","39","23","72","81","80","00","01","00","0c","00","04","00","04","08","61","63","63","6f","75","6e","74","73","07","79","6f","75","74","75","62","65","03","63","6f","6d","00","00","01","00","01","c0","0c","00","05","00","01","00","00","09","38","00","10","04","77","77","77","33","01","6c","06","67","6f","6f","67","6c","65","c0","1d","c0","32","00","01","00","01","00","00","01","06","00","04","ad","c2","23","28","c0","32","00","01","00","01","00","00","01","06","00","04","ad","c2","23","29","c0","32","00","01","00","01","00","00","01","06","00","04","ad","c2","23","2e","c0","32","00","01","00","01","00","00","01","06","00","04","ad","c2","23","20","c0","32","00","01","00","01","00","00","01","06","00","04","ad","c2","23","21","c0","32","00","01","00","01","00","00","01","06","00","04","ad","c2","23","22","c0","32","00","01","00","01","00","00","01","06","00","04","ad","c2","23","23","c0","32","00","01","00","01","00","00","01","06","00","04","ad","c2","23","24","c0","32","00","01","00","01","00","00","01","06","00","04","ad","c2","23","25","c0","32","00","01","00","01","00","00","01","06","00","04","ad","c2","23","26","c0","32","00","01","00","01","00","00","01","06","00","04","ad","c2","23","27","c0","39","00","02","00","01","00","02","99","99","00","06","03","6e","73","33","c0","39","c0","39","00","02","00","01","00","02","99","99","00","06","03","6e","73","32","c0","39","c0","39","00","02","00","01","00","02","99","99","00","06","03","6e","73","34","c0","39","c0","39","00","02","00","01","00","02","99","99","00","06","03","6e","73","31","c0","39","c1","34","00","01","00","01","00","05","3e","2d","00","04","d8","ef","20","0a","c1","10","00","01","00","01","00","05","3e","2e","00","04","d8","ef","22","0a","c0","fe","00","01","00","01","00","05","3e","2d","00","04","d8","ef","24","0a","c1","22","00","01","00","01","00","05","3e","2d","00","04","d8","ef","26","0a"]
+
 dhcp_op_dict = { 1: "DNS Request Client", 2: "DHCP Reply Server"}
 dhcp_htype_dict = {
     1: "Ethernet",
@@ -208,72 +210,118 @@ Control:
 def QuestionC(octets):   
     #Question count
     QC = int(octets[4] + octets[5],16)
-    return f"Number of Questions: {QC}"
+    return f"Number of Questions: {QC}", QC
 
 def AnswerC(octets):
     #Answer count
     AC = int(octets[6]+octets[7],16)
-    return f"Number of Answers: {AC}"
+    return f"Number of Answers: {AC}", AC
     
 def AuthorityC(octets):
     #Authority count
     AUC = int(octets[8]+octets[9],16)
-    return f"Number of Authority Resource Records: {AUC}"
+    return f"Number of Authority Resource Records: {AUC}", AUC
     
 def AdditionalC(octets):
     #Additional count
     ADC = int(octets[10]+octets[11],16)
-    return f"Number of Additional RRs: {ADC}"
+    return f"Number of Additional RRs: {ADC}", ADC
     
-def Questions(octets):
-    octets = octets[12:]
-    idx = octets.index("00")
-    q_name_octets = octets[:idx]
-    q_type_val = int("".join(octets[idx+1:idx+3]), 16)
-    q_class_val = int("".join(octets[idx+3:]), 16)
-    octets_out = octets[idx+5:]
-    
-    q_name_list = []
-    for octet in q_name_octets:
-        if octet[0] == '0':
-            if len(q_name_list) == 0:
-                pass
-            else:
-                q_name_list.append(".")
-        else:
-            q_name_list.append(chr(int(octet,16)))
-                
-    q_name = "".join(q_name_list)
-    q_type = type_rr_dict.get(q_type_val, 'Unknown')
-    q_class = hex(q_class_val)
-    return f"Questions: \n\t Name: {q_name} \n\t Type: {q_type} \n\t Class: {q_class}", octets_out
-    #it has to returned the chopped list without the questions as well so its easy to implement again the loop
-    #for the name :)
-    
-def Answers(octets):
-    if len(octets) == 0:
-        pass
+def Questions(octets, cnt):
+    if len(octets)==0:
+        return "Questions: None", octets
     else:
-        i = 0
-        Q = ''
-        while octets[i] != '00': 
-            Q += octets[i]
-            i = i + 1
-        Q = hex(int(Q,16))
-        T = int("".join(octets[i:i+2]),16)
-        T = type_rr_dict.get(T, 'Unknown')
-        C = int("".join(octets[i+2:i+4]),16)
-        C = hex(C)
-        TTL = int("".join(octets[i+4:i+8]),16)
-        Rdata_length = int("".join(octets[i+8:i+10]),16)
-        Rdata = hex(int("".join(octets[i+10:i+10+Rdata_length]),16))
-        octets = octets[i+10+Rdata_length:]
-        return f"Answers: \n\t Nom de domaine: {Q} \n\t Type d'enregistrement: {T} \n\t Class: {C} \n\t TTL: {TTL} \
-                \n\t Length Data: {Rdata_length} \n\t Data: {Rdata}", octets
+        octets = octets[12:]
+        idx = octets.index("00")
+        q_name_octets = octets[:idx]
+        q_type_val = int("".join(octets[idx+1:idx+3]), 16)
+        q_class_val = int("".join(octets[idx+3:idx+5]), 16)
+        octets_out = octets[idx+5:]
+    
+        q_name_list = []
+        for octet in q_name_octets:
+            if octet[0] == '0':
+                if len(q_name_list) == 0:
+                    pass
+                else:
+                    q_name_list.append(".")
+            else:
+                q_name_list.append(chr(int(octet,16)))
+                    
+        q_name = "".join(q_name_list)
+        q_type = type_rr_dict.get(q_type_val, 'Unknown')
+        q_class = hex(q_class_val)
+        return f"Questions:\n\t Name: {q_name} \n\t Type: {q_type} \n\t Class: {q_class}", octets_out
 
-def Authority(octets):
-    if len(octets) == 0:
-        return octets
+
+def getDomain(octets_dns, c, boolean):
+    c_val = format(int(c,16), '016b')
+    ptr = int(c_val[2:],2)
+    word_list = []
+    s = ""
+    for idx, octet in enumerate(octets_dns[ptr:]):
+        if octet == "00":
+            word_list.append(s)
+            return ".".join(word_list), idx if boolean is True else ".".join(word_list)
+        elif octet[0]=="0":
+            if len(s) != 0:
+                word_list.append(s)
+                s = ""
+        else:
+            s += chr(int(octet,16))
+    word_list.append(s)
+    return ".".join(word_list), idx if boolean is True else ".".join(word_list)
+
+test = ['04', '77', '77', '77', '33', '01', '6c', '06', '67', '6f', '6f', '67', '6c', '65', 'c0', '1d']
+print(getDomain(test, "0000", False))
+
+def Answers(octets, cnt, octets_dns):
+    print(octets)
+    answers_list = ["Answers:"]
+    if len(octets)==0 or cnt ==0:
+        pass
+        return "Answers Resource Records: None"
+    else:
+        while True:
+            if octets[0] == "00":
+                return "\n\n".join(answers_list), octets
+            if octets[0][0]=="c":
+                type = type_rr_dict.get(int(''.join(octets[2:4]),16))
+                length = int(''.join(octets[10:12]),16)
+                if type == "A":
+                    address = '.'.join([str(int(octet,16)) for octet in octets[12:16]])
+                else: 
+                    address = getDomain(octets[12:12+length],"0000", False)
+                answer = [
+                    f" Name: {getDomain(octets_dns, octets[0]+octets[1], False)}",
+                    f" Type: {type}",
+                    f" Class: {int(''.join(octets[4:6]),16)}",
+                    f" Time to live: {int(''.join(octets[6:10]),16)}",
+                    f" Data Length: {length}",
+                    f" Address: {address}",
+                ]
+                answers_list.append("\n".join(answer))
+                octets = octets[12+length:]
+                if len(octets) == 0:
+                    return "\n\n".join(answers_list), octets
+            else:
+                qname, idx = getDomain(octets, "0000", True)
+                answer = [
+                    f" Name: {qname}",
+                    f" Type: {type_rr_dict.get(int(''.join(octets[idx+1:idx+3]),16))}",
+                    f" Class: {int(''.join(octets[idx+3:idx+5]),16)}",
+                    f" Time to live: {int(''.join(octets[idx+5:idx+9]),16)}",
+                    f" Data Length: {int(''.join(octets[idx+9:idx+11]),16)}",
+                    f" Address: {'.'.join([chr(octet) for octet in octets[idx+11:idx+15]])}",
+                ]
+                answers_list.append("\n".join(answer))
+                octets = octets[idx+15:]
+                if len(octets) == 0:
+                    return "\n\n".join(answers_list), octets
+
+def Authority(octets, cnt, octets_dns):
+    if len(octets)==0 or cnt==0 :
+        return "Authority Resource Records: None"
     else:
         i = 0
         Q = ''
@@ -292,9 +340,9 @@ def Authority(octets):
         return f"Authority: \n\t Nom de domaine: {Q} \n\t Type d'enregistrement: {T} \n\t Class: {C} \n\t TTL: {TTL} \
                 \n\t Length Data: {Rdata_length} \n\t Data: {Rdata}", octets   
     
-def Additional(octets):
-    if len(octets) == 0:
-        return "", octets
+def Additional(octets, cnt, octets_dns):
+    if len(octets)==0 or cnt==0:
+        return "Additional Resource Records: None"
     else:
         i = 0
         Q = ''
@@ -316,32 +364,36 @@ def Additional(octets):
             
     
 def DNS(octets):
-    
+    octets_dns = octets
+    ques_s, ques_cnt = QuestionC(octets)                # Questions Count
+    answ_s, answ_cnt   = AnswerC(octets)                # Answers Count
+    auth_s, auth_cnt = AuthorityC(octets)               # Authority Count
+    addi_s, addi_cnt = AdditionalC(octets)              # Additional Count
+
+
     elements = [
         Identification(octets),             # Identification
-        Control(octets),                    # Control
-        QuestionC(octets),                  # Questions Count
-        AnswerC(octets),                    # Answers Count
-        AuthorityC(octets),                 # Authority Count
-        AdditionalC(octets),                # Additional Count
+        Control(octets) + "\n",                    # Control
+        ques_s,
+        answ_s,
+        auth_s,
+        addi_s+"\n\n",
     ]
 
     #Questions
-    que_s, octets = Questions(octets)
-    elements.append(que_s)
+    que_s, octets = Questions(octets, ques_cnt)
+    elements.append(que_s+"\n\n")
     if len(octets) != 0:
         #Answers
-        ans_s, octets = Answers(octets)
+        ans_s, octets = Answers(octets, answ_cnt, octets_dns)
         elements.append(ans_s)
-        print(ans_s)
-        print(octets)
         if len(octets) != 0:
             #Authority
-            aut_s, octets = Authority(octets)
+            aut_s, octets = Authority(octets, auth_cnt, octets_dns)
             elements.append(aut_s)
             if len(octets) != 0:
                 #Additional
-                add_s, seg_left = Additional(octets)
+                add_s, seg_left = Additional(octets, addi_cnt, octets_dns)
                 elements.append(add_s)
 
     parsed_dict = {"analysis": "\n".join(elements)}
@@ -356,6 +408,7 @@ def DNS(octets):
 
 
 
+
 def parserApplication(transport_dict):
     proto = transport_dict["utility"]
     octets = transport_dict["datagram"]
@@ -366,3 +419,4 @@ def parserApplication(transport_dict):
     return application_dict
 
 
+print(DNS(octets[42:])["analysis"])
