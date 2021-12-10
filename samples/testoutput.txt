@@ -1,10 +1,10 @@
 ===============RESULTS================
-* 1 Frames in total
+* 4 Frames in total
 
 ----------------------------------
 
 
-* 1 of 1 *
+* 1 of 4 *
 
 
 
@@ -12,8 +12,8 @@
 
 Ethernet Protocol:------------------------------------------
 
-	Source MAC: 00.14.0B.33.33.27
-	Destination MAC: D0.7A.B5.96.CD.0A
+	Source MAC: FF.FF.FF.FF.FF.FF
+	Destination MAC: F0.18.98.59.AE.32
 	Type: Internet Protocol version 4 (IPv4)
 
 
@@ -24,207 +24,326 @@ IP Protocol:------------------------------------------------
 	Version: IPV4
 	IP Header Length: 5
 	Type Of Service: 0
-	Total Length: 406 octets
-	Identifictaion: 0
+	Total Length: 328 octets
+	Identifictaion: 47437
+	Flags:
+	The first bit is reserved with a value of: 0
+	Don't Fragment: False
+	More Fragment: False
+	Fragment Offset: 0 octets
+	Protocol: UDP
+	Checksum: 344 (0b101011000)
+	Source Address: 0.0.0.0
+	Destination Address: 255.255.255.255
+	No options avaliable
+
+
+
+
+UDP:-----------------------------------------------------
+
+	Source Port: 68 (DHCP)
+	Destination Port: 67 (DHCP)
+	Length: 308
+	Checksum: 6370 (0b1100011100010)
+
+
+
+
+DHCP Protocol:-----------------------------------------------
+
+	Operation Code: 1(DNS Request Client)
+	Hardware Address Type: 1(Ethernet)
+	Length: 48 octets
+	Hops: 0
+	Client ID: 2996644789
+	Start Time: 0
+	Flags: 0000
+	Client Address: 0.0.0.0
+	Offered Address: 0.0.0.0
+	Server Address: 0.0.0.0
+	Relay Agent Address: 0.0.0.0
+	Client Hardware Address: F0.18.98.59.AE.32(Ethernet)
+	Server Host Name: None (Not Given)
+	Boot File Name: None (Not Given)
+Options
+		53: DHCP Message Type
+			Option Length: 1 bytes
+			DHCP Message: DHCPDISCOVER (01)
+		55: Parameter List
+			Option Length: 10 bytes
+			Option Value: 6954640394428484627502 (017903060F77FC5F2C2E)
+		57: DHCP Max Msg Size
+			Option Length: 2 bytes
+			Option Value: 1500 (05DC)
+		61: Client Id
+			Option Length: 7 bytes
+			Option Value: 545463402606130 (01F0189859AE32)
+		51: Adress Time
+			Option Length: 4 bytes
+			Option Value: 7776000 (0076A700)
+		12: Hostname
+			Option Length: 12 bytes
+			Option Value: 23948080300542856784453463917 (4D6163426F6F6B2D50726F6D)
+		255: End of Options List (EOOL)
+
+----------------------------------
+
+
+* 2 of 4 *
+
+
+
+
+
+Ethernet Protocol:------------------------------------------
+
+	Source MAC: F0.18.98.59.AE.32
+	Destination MAC: 0C.8D.DB.1A.1E.88
+	Type: Internet Protocol version 4 (IPv4)
+
+
+
+
+IP Protocol:------------------------------------------------
+
+	Version: IPV4
+	IP Header Length: 5
+	Type Of Service: 0
+	Total Length: 328 octets
+	Identifictaion: 8767
 	Flags:
 	The first bit is reserved with a value of: 0
 	Don't Fragment: True
 	More Fragment: False
 	Fragment Offset: 0 octets
 	Protocol: UDP
-	Checksum: 46496 (0b1011010110100000)
-	Source Address: 192.168.1.1
-	Destination Address: 192.168.1.101
+	Checksum: 53068 (0b1100111101001100)
+	Source Address: 192.168.99.1
+	Destination Address: 192.168.99.199
 	No options avaliable
 
 
 
 
-UDP:---------------------------------------------
+UDP:-----------------------------------------------------
 
-	Source Port: 53 (DNS)
-	Destination Port: 57311 (Client)
-	Length: 386
-	Checksum: 15929 (0b11111000111001)
-
-
+	Source Port: 67 (DHCP)
+	Destination Port: 68 (DHCP)
+	Length: 308
+	Checksum: 55439 (0b1101100010001111)
 
 
-DNS Protocol:------------------------------------------------
-
-	Transaction ID: 0x2372
-
-	Control:
-    	Message: Response
-    	Opcode: Query (0b0000)
-    	Authoritative: Cache
-    	Truncated: Not truncated
-    	Recursion Desired: Recursive
-    	Recursion Avaliable: Server manages recursive
-    	Z: Reserved for extensions
-    	Authenticated Data: Not authenticated
-    	Checking Disabled: Unacceptable
-    	Reply Code: NOERROR
 
 
-	Number of Questions: 1
-	Number of Answers: 12
-	Number of Authority Resource Records: 4
-	Number of Additional RRs: 4
+DHCP Protocol:-----------------------------------------------
+
+	Operation Code: 2(DHCP Reply Server)
+	Hardware Address Type: 1(Ethernet)
+	Length: 48 octets
+	Hops: 0
+	Client ID: 2996644789
+	Start Time: 0
+	Flags: 0000
+	Client Address: 0.0.0.0
+	Offered Address: 192.168.99.199
+	Server Address: 0.0.0.0
+	Relay Agent Address: 0.0.0.0
+	Client Hardware Address: F0.18.98.59.AE.32(Ethernet)
+	Server Host Name: None (Not Given)
+	Boot File Name: None (Not Given)
+Options
+		53: DHCP Message Type
+			Option Length: 1 bytes
+			DHCP Message: DHCPOFFER (02)
+		54: DHCP Server Id
+			Option Length: 4 bytes
+			Option Value: 3232260865 (C0A86301)
+		51: Adress Time
+			Option Length: 4 bytes
+			Option Value: 3600 (00000E10)
+		1: Subnet Mask
+			Option Length: 4 bytes
+			Option Value: 4294967040 (FFFFFF00)
+		3: Router
+			Option Length: 4 bytes
+			Option Value: 3232260865 (C0A86301)
+		6: Domain Server
+			Option Length: 8 bytes
+			Option Value: 2571819700114753384 (23B0F06423B10768)
+		255: End of Options List (EOOL)
+
+----------------------------------
 
 
-	Questions:
-
-		Name: accounts.youtube.com
-		Type: A
-		Class: 0x1
+* 3 of 4 *
 
 
-	Answers:
-
- 		Name: accounts.youtube.com
- 		Type: CNAME
- 		Class: 1
- 		Time to live: 2360
- 		Data Length: 16
- 		Address: www3.l.google.com
-
- 		Name: www3.l.google.com
- 		Type: A
- 		Class: 1
- 		Time to live: 262
- 		Data Length: 4
- 		Address: 173.194.35.40
-
- 		Name: www3.l.google.com
- 		Type: A
- 		Class: 1
- 		Time to live: 262
- 		Data Length: 4
- 		Address: 173.194.35.41
-
- 		Name: www3.l.google.com
- 		Type: A
- 		Class: 1
- 		Time to live: 262
- 		Data Length: 4
- 		Address: 173.194.35.46
-
- 		Name: www3.l.google.com
- 		Type: A
- 		Class: 1
- 		Time to live: 262
- 		Data Length: 4
- 		Address: 173.194.35.32
-
- 		Name: www3.l.google.com
- 		Type: A
- 		Class: 1
- 		Time to live: 262
- 		Data Length: 4
- 		Address: 173.194.35.33
-
- 		Name: www3.l.google.com
- 		Type: A
- 		Class: 1
- 		Time to live: 262
- 		Data Length: 4
- 		Address: 173.194.35.34
-
- 		Name: www3.l.google.com
- 		Type: A
- 		Class: 1
- 		Time to live: 262
- 		Data Length: 4
- 		Address: 173.194.35.35
-
- 		Name: www3.l.google.com
- 		Type: A
- 		Class: 1
- 		Time to live: 262
- 		Data Length: 4
- 		Address: 173.194.35.36
-
- 		Name: www3.l.google.com
- 		Type: A
- 		Class: 1
- 		Time to live: 262
- 		Data Length: 4
- 		Address: 173.194.35.37
-
- 		Name: www3.l.google.com
- 		Type: A
- 		Class: 1
- 		Time to live: 262
- 		Data Length: 4
- 		Address: 173.194.35.38
-
- 		Name: www3.l.google.com
- 		Type: A
- 		Class: 1
- 		Time to live: 262
- 		Data Length: 4
- 		Address: 173.194.35.39
 
 
-	Authoritys:
 
- 		Name: google.com
- 		Type: NS
- 		Class: 1
- 		Time to live: 170393
- 		Data Length: 6
- 		Address: google.com
+Ethernet Protocol:------------------------------------------
 
- 		Name: google.com
- 		Type: NS
- 		Class: 1
- 		Time to live: 170393
- 		Data Length: 6
- 		Address: google.com
-
- 		Name: google.com
- 		Type: NS
- 		Class: 1
- 		Time to live: 170393
- 		Data Length: 6
- 		Address: google.com
-
- 		Name: google.com
- 		Type: NS
- 		Class: 1
- 		Time to live: 170393
- 		Data Length: 6
- 		Address: ns1.google.com
+	Source MAC: FF.FF.FF.FF.FF.FF
+	Destination MAC: F0.18.98.59.AE.32
+	Type: Internet Protocol version 4 (IPv4)
 
 
-	Additionals:
 
- 		Name: ns1.google.com
- 		Type: A
- 		Class: 1
- 		Time to live: 343597
- 		Data Length: 4
- 		Address: 216.239.32.10
 
- 		Name: ns2.google.com
- 		Type: A
- 		Class: 1
- 		Time to live: 343598
- 		Data Length: 4
- 		Address: 216.239.34.10
+IP Protocol:------------------------------------------------
 
- 		Name: ns3.google.com
- 		Type: A
- 		Class: 1
- 		Time to live: 343597
- 		Data Length: 4
- 		Address: 216.239.36.10
+	Version: IPV4
+	IP Header Length: 5
+	Type Of Service: 0
+	Total Length: 328 octets
+	Identifictaion: 47438
+	Flags:
+	The first bit is reserved with a value of: 0
+	Don't Fragment: False
+	More Fragment: False
+	Fragment Offset: 0 octets
+	Protocol: UDP
+	Checksum: 343 (0b101010111)
+	Source Address: 0.0.0.0
+	Destination Address: 255.255.255.255
+	No options avaliable
 
- 		Name: ns4.google.com
- 		Type: A
- 		Class: 1
- 		Time to live: 343597
- 		Data Length: 4
- 		Address: 216.239.38.10
 
+
+
+UDP:-----------------------------------------------------
+
+	Source Port: 68 (DHCP)
+	Destination Port: 67 (DHCP)
+	Length: 308
+	Checksum: 16696 (0b100000100111000)
+
+
+
+
+DHCP Protocol:-----------------------------------------------
+
+	Operation Code: 1(DNS Request Client)
+	Hardware Address Type: 1(Ethernet)
+	Length: 48 octets
+	Hops: 0
+	Client ID: 2996644789
+	Start Time: 2
+	Flags: 0000
+	Client Address: 0.0.0.0
+	Offered Address: 0.0.0.0
+	Server Address: 0.0.0.0
+	Relay Agent Address: 0.0.0.0
+	Client Hardware Address: F0.18.98.59.AE.32(Ethernet)
+	Server Host Name: None (Not Given)
+	Boot File Name: None (Not Given)
+Options
+		53: DHCP Message Type
+			Option Length: 1 bytes
+			DHCP Message: DHCPREQUEST (03)
+		55: Parameter List
+			Option Length: 10 bytes
+			Option Value: 6954640394428484627502 (017903060F77FC5F2C2E)
+		57: DHCP Max Msg Size
+			Option Length: 2 bytes
+			Option Value: 1500 (05DC)
+		61: Client Id
+			Option Length: 7 bytes
+			Option Value: 545463402606130 (01F0189859AE32)
+		50: Address Request
+			Option Length: 4 bytes
+			Option Value: 3232261063 (C0A863C7)
+		54: DHCP Server Id
+			Option Length: 4 bytes
+			Option Value: 3232260865 (C0A86301)
+		12: Hostname
+			Option Length: 12 bytes
+			Option Value: 23948080300542856784453463917 (4D6163426F6F6B2D50726F6D)
+		255: End of Options List (EOOL)
+
+----------------------------------
+
+
+* 4 of 4 *
+
+
+
+
+
+Ethernet Protocol:------------------------------------------
+
+	Source MAC: F0.18.98.59.AE.32
+	Destination MAC: 0C.8D.DB.1A.1E.88
+	Type: Internet Protocol version 4 (IPv4)
+
+
+
+
+IP Protocol:------------------------------------------------
+
+	Version: IPV4
+	IP Header Length: 5
+	Type Of Service: 0
+	Total Length: 328 octets
+	Identifictaion: 9008
+	Flags:
+	The first bit is reserved with a value of: 0
+	Don't Fragment: True
+	More Fragment: False
+	Fragment Offset: 0 octets
+	Protocol: UDP
+	Checksum: 52827 (0b1100111001011011)
+	Source Address: 192.168.99.1
+	Destination Address: 192.168.99.199
+	No options avaliable
+
+
+
+
+UDP:-----------------------------------------------------
+
+	Source Port: 67 (DHCP)
+	Destination Port: 68 (DHCP)
+	Length: 308
+	Checksum: 54669 (0b1101010110001101)
+
+
+
+
+DHCP Protocol:-----------------------------------------------
+
+	Operation Code: 2(DHCP Reply Server)
+	Hardware Address Type: 1(Ethernet)
+	Length: 48 octets
+	Hops: 0
+	Client ID: 2996644789
+	Start Time: 2
+	Flags: 0000
+	Client Address: 0.0.0.0
+	Offered Address: 192.168.99.199
+	Server Address: 0.0.0.0
+	Relay Agent Address: 0.0.0.0
+	Client Hardware Address: F0.18.98.59.AE.32(Ethernet)
+	Server Host Name: None (Not Given)
+	Boot File Name: None (Not Given)
+Options
+		53: DHCP Message Type
+			Option Length: 1 bytes
+			DHCP Message: DHCPACK (05)
+		54: DHCP Server Id
+			Option Length: 4 bytes
+			Option Value: 3232260865 (C0A86301)
+		51: Adress Time
+			Option Length: 4 bytes
+			Option Value: 3600 (00000E10)
+		1: Subnet Mask
+			Option Length: 4 bytes
+			Option Value: 4294967040 (FFFFFF00)
+		3: Router
+			Option Length: 4 bytes
+			Option Value: 3232260865 (C0A86301)
+		6: Domain Server
+			Option Length: 8 bytes
+			Option Value: 2571819700114753384 (23B0F06423B10768)
+		255: End of Options List (EOOL)

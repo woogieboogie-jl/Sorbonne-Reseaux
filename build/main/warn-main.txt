@@ -35,4 +35,4 @@ missing module named winreg - imported by importlib._bootstrap_external (conditi
 missing module named nt - imported by os (delayed, conditional, optional), ntpath (optional), shutil (conditional), importlib._bootstrap_external (conditional), pathlib (conditional), ctypes (delayed, conditional)
 missing module named _frozen_importlib_external - imported by importlib._bootstrap (delayed), importlib (optional), importlib.abc (optional), zipimport (top-level)
 excluded module named _frozen_importlib - imported by importlib (optional), importlib.abc (optional), zipimport (top-level)
-missing module named pyimod03_importers - imported by /opt/homebrew/lib/python3.9/site-packages/PyInstaller/hooks/rthooks/pyi_rth_pkgutil.py (top-level)
+missing module named pyimod03_importers - imported by /usr/local/lib/python3.9/site-packages/PyInstaller/hooks/rthooks/pyi_rth_pkgutil.py (top-level)
