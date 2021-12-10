@@ -54,7 +54,6 @@ def protoOthers(octets,proto):
 
 def parserTransport(network_dict):
     proto = network_dict["protocol"]
-    print(proto)
     octets = network_dict["segment"]
     if proto == "UDP":
         transport_dict = protoUDP(octets,proto)
