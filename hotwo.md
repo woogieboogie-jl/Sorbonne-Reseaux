@@ -3,9 +3,11 @@
 The analyser can be used following these steps:
 
 #1
-The first step is executing the program. There are two options in order to execute the program. The first one is using the main.exe file. The latter can 
-simply be opened and it will open your terminal with the program interface. The second option is to execute the program directly using python. In this case one 
-can simply run the file 'main.py' of the source code and the program will be visible and operational in the python console.
+The first step is executing the program. There are three options in order to execute the program: 
+  1. Using the .exe for MAC.
+  2. Using the .exe for Windows.
+  3. Executing the program directly using python.
+For the first two options one can simply open the corresponding .exe file on their computer, which will automatically deploy your terminal with the program interface. In the case of the third option, one can simply run the file 'main.py' of the source code and the program will be visible and operational in the python console or in the terminal.
 
 #2
 Once the program is executed, the first thing it demands is for the user to type the absolute path (eg. /Users/Jaewooklee/github/Sor…) of the input text file 
