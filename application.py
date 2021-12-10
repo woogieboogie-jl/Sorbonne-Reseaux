@@ -515,6 +515,10 @@ def DNS(octets):
 
     return parsed_dict
 
+def Others(octets):
+    parsed_dict = {"analysis": "(Application Layer) UNKNOWN PROTOCOL, NOT SUPPORTED:------------------------------------------"}
+    return parsed_dict
+
 
 def parserApplication(transport_dict):
     proto = transport_dict["utility"]
@@ -523,5 +527,7 @@ def parserApplication(transport_dict):
         application_dict = DNS(octets)
     elif proto == "DHCP":
         application_dict = DHCP(octets)
+    else:
+        application_dict = Others(octets)
     return application_dict
 

@@ -1,6 +1,3 @@
-octets = ['46','00','00','44','AD','0B','00','00','40','11','72','72','AC','14','00','06','60','56','78','56','00','03','00','56','04','56','38','92','08','08','D4']
-
-
 def getVersion(octets):
     return f"\tVersion: IPV{int(str(octets[0])[0],16)}"
 
@@ -64,6 +61,7 @@ def getOpts(octets):
     if len(opt_list) == 0:
         opts_out.append("** POSSIBLE DATA CORRUPTION: Options impossible to locate while IHL indicates its existence!")
     else:
+        print(opt_list)
         while len(opt_list) > 0:
             o = int(opt_list[0], 16)
             opt = opt_dict.get(o, "Unknown Option")
@@ -74,7 +72,10 @@ def getOpts(octets):
                 opt_len = int(opt_list[1], 16)
                 opts_out.append(f"\t\t\tThe length of option is: {opt_len} octets.")
                 opt_val_hex = ''.join(opt_list[2:opt_len])
-                opt_val_dec = hex(int(opt_val_hex, 16))
+                try:
+                    opt_val_dec = hex(int(opt_val_hex, 16))
+                except ValueError:
+                    opt_val_dec = "N/A"
                 opts_out.append(f"\t\t\tThe value of option is: {opt_val_dec} ({opt_val_hex})")
                 opt_list = opt_list[opt_len:]
     return "\n".join(opts_out)
@@ -118,7 +119,7 @@ def typeIPV4(octets):
 
 
 def typeOthers(octets):
-    parsed_dict = {"segment": [], "protocol": "N/A", "analysis": "UNKNOWN TYPE ANALYSIS NOT SUPPORTED"}
+    parsed_dict = {"segment": [], "protocol": "N/A", "analysis": "(Network Layer) UNKNOWN TYPE ANALYSIS NOT SUPPORTED:------------------------------------------"}
     return parsed_dict
 
 
@@ -136,7 +137,7 @@ def parserNetwork(datalink_dict):
 
     if type == "0800":
         parsed_dict = typeIPV4(packet)
-    elif type == "0806":
+    else:
         parsed_dict = typeOthers(packet)
         pass
     
