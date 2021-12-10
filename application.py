@@ -113,8 +113,9 @@ def getOptSName(octets):
     if int(sname_data,16) == 0:
         return f"\tServer Host Name: None (Not Given)"
     else:
-        print(sname_data)
-        sname = (sname_data).decode("hex")
+        sname_cut = sname_data[:sname_data.index("FF")]
+        sname = ''.join([chr(int(''.join(c), 16)) for c in zip(sname_cut[0::2],sname_cut[1::2])])
+        sname = sname[1:]
         return f"\tServer Host Name: {sname}"
 
 def getOptFName(octets):
@@ -122,17 +123,19 @@ def getOptFName(octets):
     if int(bname_data,16) == 0:
         return f"\tBoot File Name: None (Not Given)"
     else:
-        bname = (bname_data).decode("hex")
+        bname_cut = bname_data[:bname_data.index("FF")]
+        bname = ''.join([chr(int(''.join(c), 16)) for c in zip(bname_cut[0::2],bname_cut[1::2])])
+        bname = bname[1:]
         return f"\tBoot File Name: {bname}"
 
 def getOptions(octets):
-    opts_out = ["Options"]
+    opts_out = ["\tOptions(Application)"]
     if octets[236:240] == ["63", "82", "53", "63"]:
         opt_list = octets[240:]
     else:
         opt_list = octets[236:]
     if len(opt_list) == 0:
-        opts_out.append("No options avaliable")
+        opts_out.append("No Options Avaliable")
     else:
         while len(opt_list) > 0:
             o = int(opt_list[0], 16)

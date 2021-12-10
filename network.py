@@ -54,15 +54,15 @@ def getDestinAddr(octets):
     SD = f"{int(octets[16],16)}.{int(octets[17],16)}.{int(octets[18],16)}.{int(octets[19],16)}"
     return f"\tDestination Address: {SD}"
 
-def getOpts(octets):
+def getOpts(octets, IHL):
     opt_dict = { 0: "End of Options List (EOOL)", 1: "No Operation (NOP)", 7: "Record Route (RR)", 68: "Time Stamp (TS)", 131: "Loose Source Route (LSR)", 137: "Strict Source Route (SSR)"}
     opt_list = octets[20:]
-    opts_out = ["Options"]
+    opts_out = ["\tOptions(Network)"]
+    cnt_opt = 0
     if len(opt_list) == 0:
         opts_out.append("** POSSIBLE DATA CORRUPTION: Options impossible to locate while IHL indicates its existence!")
     else:
-        print(opt_list)
-        while len(opt_list) > 0:
+        while len(opt_list) > 0 and cnt_opt < (IHL*4-20):
             o = int(opt_list[0], 16)
             opt = opt_dict.get(o, "Unknown Option")
             opts_out.append(f"\t\t{o}: {opt}")
@@ -70,15 +70,17 @@ def getOpts(octets):
                 break
             else:
                 opt_len = int(opt_list[1], 16)
-                opts_out.append(f"\t\t\tThe length of option is: {opt_len} octets.")
+                opts_out.append(f"\t\t\tOption Length: {opt_len} octets.")
                 opt_val_hex = ''.join(opt_list[2:opt_len])
                 try:
-                    opt_val_dec = hex(int(opt_val_hex, 16))
+                    opt_val_dec = int(opt_val_hex, 16)
                 except ValueError:
                     opt_val_dec = "N/A"
-                opts_out.append(f"\t\t\tThe value of option is: {opt_val_dec} ({opt_val_hex})")
+                opts_out.append(f"\t\t\tOption Value: {opt_val_dec} ({opt_val_hex})")
                 opt_list = opt_list[opt_len:]
-    return "\n".join(opts_out)
+                cnt_opt += opt_len
+    opt_s = "\n".join(opts_out)
+    return opt_s
 
 
 def getTitleIP():
@@ -87,7 +89,9 @@ def getTitleIP():
 
 
 def protoICMP(octets):
-    pass
+    segment = getOpts(octets)
+    icmp_s = f"DETECTED ICMP DATA, ICMP NOT SUPPORTED:\n {''.join(segment)}"
+    return 
 
 def typeIPV4(octets):
     proto_s, proto = getProto(octets)
@@ -107,14 +111,17 @@ def typeIPV4(octets):
         getSourceAddr(octets),
         getDestinAddr(octets)
     ]
+
     
     if int(str(octets[0])[1],16) == 5:
         elements.append("\tNo options avaliable")
     elif int(str(octets[0])[1],16) > 5:
-        elements.append(getOpts(octets))
+        opts_s = getOpts(octets, IHL)
+        elements.append(opts_s)
     else:
         elements.append("** POSSIBLE DATA CORRUPTION: IHL value given less than 5!")
     parsed_dict = {"segment": octets[IHL*4:], "protocol": proto, "analysis": "\n".join(elements)}
+
     return parsed_dict
 
 
