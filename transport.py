@@ -39,11 +39,10 @@ def protoUDP(octets, proto):
     parsed_dict = {"datagram": octets[8:], "utility": port_appli, "analysis": "\n".join(elements)}
     return parsed_dict
 
-def protoTCP(octets):
+def protoTCP(octets, proto):
     pass
 
 def protoOthers(octets,proto):
-    print(octets)
     pass
     
 
