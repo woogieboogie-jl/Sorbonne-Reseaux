@@ -24,7 +24,29 @@ dhcp_opt_dict = {1: "Subnet Mask", 2: "Time Offset", 3: "Router", 4: "Time Serve
                  30: "Mask Supplier", 31: "Router Discovery", 32: "Router Request", \
                  33: "Static Route", 34: "Trailers", 35: "ARP Timeout", \
                  36: "Ethernet", 37: "Default TCP TTL", 38: "Keepalive Time", \
-                 255: "End of Options List (EOOL)", 53: "DHCP Message Type"}
+                 255: "End of Options List (EOOL)", 53: "DHCP Message Type", \
+                 55: "Parameter List", 56: "DHCP Message", 57: "DHCP Max Msg Size", \
+                 39: "Keepalive Data", 40: "NIS Domain", 41: "NIS Servers", \
+                 42: "NTP Servers", 43: "Vendor Specific", 44: "NETBIOS Name Srv", \
+                 45: "NETBIOS Dist Srv", 46: "NETBIOS Node Type", 47: "NETBIOS Scope", \
+                 48: "X Window Font", 49: "X Window Font", 50: "Address Request", \
+                 52: "Overload", 58: "Renewal Time", 59: "Rebinding Time", \
+                 60: "Class Id", 61: "Client Id", 62: "NetWare/IP Domain", \
+                 63: "NetWare/IP Option", 64: "NIS-Domain-Name", 65: "NIS-Domain-Name", \
+                 66: "Server-Name", 67: "Bootfile-Name", 68: "Home-Agent-Addrs", \
+                 69: "SMTP-Server", 70: "POP3-Server", 71: "NNTP-Servet", \
+                 72: "WWW-Server", 73: "Finger-Server", 74: "IRC-Server", \
+                 75: "StreetTalk-Server", 76: "STDA-Server", 77: "User-Class", \
+                 78: "Directory Agent", 79: "Service Scope", 80: "Rapid Commit", \
+                 81: "Client FQDN", 82: "Relay Agent Information", 83: "iSNS", \
+                 84: "REMOVED/Unassigned", 85: "NDS Servers", 86: "NDS Tree Name", \
+                 20: "SrcRte On/Off", 21: "Policy Filter", 22: "Max DG Assembly", \
+                 23: "Default IP TTL", 87: "NDS Context", 88: "BCMCS Controller Domain Name list", \
+                 89: "BCMCS Controller IPv4 address option", 90: "Authentication", \
+                 91: "client-last-transaction-time option", 92: "associated-ip option", \
+                 93: "Client System", 94: "Client NDI", 95: "LDAP", 96: "REMOVED/Unassigned", \
+                 97: "UUID/GUID", 98: "User-Auth", 99: "GEOCONF_CIVIC", 100: "PCode"}
+    
 dhcp_msg_dict = {
     1:     "DHCPDISCOVER",
     2:     "DHCPOFFER",
@@ -33,6 +55,7 @@ dhcp_msg_dict = {
     5:     "DHCPACK",
     6:     "DHCPNAK",
     7:     "DHCPRELEASE",
+    8:     "DHCPINFORM", 
     }
 
 def getOPCode(octets):
