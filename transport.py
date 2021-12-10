@@ -18,7 +18,7 @@ def getCS(octets):
     return f"\tChecksum: {CS} ({bin(CS)})"
 
 def getTitleT(proto):
-    return f"{proto}:---------------------------------------------\n"
+    return f"{proto}:-----------------------------------------------------\n"
 
 
 
