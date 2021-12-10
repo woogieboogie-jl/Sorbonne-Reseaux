@@ -19,7 +19,7 @@ def getFlags(octets):
     R = F[0]
     DF = F[1]
     MF = F[2]
-    s = f"\tFlags:\n\tThe first bit is reserved with a value of: {R}\n\tDon't Fragment: {True if int(DF) else False}\n\tMore Fragment: {True if int(MF) else False}"
+    s = f"\tFlags:\n\t\tThe first bit is reserved with a value of: {R}\n\t\tDon't Fragment: {True if int(DF) else False}\n\t\tMore Fragment: {True if int(MF) else False}"
     return s
 
 def getFO(octets):
