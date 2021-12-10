@@ -110,10 +110,10 @@ def getCHAddr(octets, htype):
 
 def getOptSName(octets):
     sname_data = ''.join(octets[44:108])
-    print(sname_data)
     if int(sname_data,16) == 0:
         return f"\tServer Host Name: None (Not Given)"
     else:
+        print(sname_data)
         sname = (sname_data).decode("hex")
         return f"\tServer Host Name: {sname}"
 
@@ -141,9 +141,6 @@ def getOptions(octets):
             if o == 255:
                 break
             else:
-                print(opt_list[0])
-                print(opt_list[1])
-                print(opt_list[2])
                 opt_len = int(opt_list[1], 16)
                 opts_out.append(f"\t\t\tOption Length: {opt_len} bytes")
                 opt_val_hex = ''.join(opt_list[2:2+opt_len])

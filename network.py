@@ -117,6 +117,10 @@ def typeIPV4(octets):
     return parsed_dict
 
 
+def typeOthers(octets):
+    parsed_dict = {"segment": [], "protocol": "N/A", "analysis": "UNKNOWN TYPE ANALYSIS NOT SUPPORTED"}
+    return parsed_dict
+
 
 
 
@@ -133,10 +137,8 @@ def parserNetwork(datalink_dict):
     if type == "0800":
         parsed_dict = typeIPV4(packet)
     elif type == "0806":
+        parsed_dict = typeOthers(packet)
         pass
-    
-    
-    
     
     return parsed_dict
 

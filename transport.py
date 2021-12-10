@@ -40,10 +40,12 @@ def protoUDP(octets, proto):
     return parsed_dict
 
 def protoTCP(octets, proto):
-    pass
+    parsed_dict = {"datagram": [], "utility": "N/A", "analysis": "TCP PROTOCOL NOT SUPPORTED"}
+    return parsed_dict
 
 def protoOthers(octets,proto):
-    pass
+    parsed_dict = {"datagram": [], "utility": "N/A", "analysis": "UNKNOWN PROTOCOL, NOT SUPPORTED"}
+    return parsed_dict
     
 
 
