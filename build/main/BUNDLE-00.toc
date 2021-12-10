@@ -1,3 +1,0 @@
-([('main',
-   '/Users/jaewooklee/github/Sorbonne/LU3IN033/dist/main',
-   'EXECUTABLE')],)
